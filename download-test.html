@@ -1,0 +1,22 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Direct Download Test</title>
+    <style>
+        body { font-family: Arial, sans-serif; padding: 20px; }
+        .btn { background: #10b981; color: white; border: none; padding: 12px 24px; margin: 10px; border-radius: 5px; cursor: pointer; }
+        .btn:hover { background: #059669; }
+    </style>
+</head>
+<body>
+    <h2>Test Direct Download</h2>
+    <p>Click buttons to download files directly:</p>
+    
+    <button class="btn" onclick="downloadReport('csv')">📊 Download CSV</button>
+    <button class="btn" onclick="downloadReport('json')">📋 Download JSON</button>
+    
+    <script src="js/simple-export.js"></script>
+</body>
+</html>

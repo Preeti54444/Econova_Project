@@ -1,0 +1,1286 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description"
+        content="WetlandGuard - Report and track wetland violations in real-time. Protect ecosystems through community action.">
+    <meta name="theme-color" content="#10b981">
+    <title>WetlandGuard - Community Wetland Watch Platform</title>
+
+    <!-- Stylesheets -->
+    <link rel="stylesheet" href="css/style.css">
+    <link rel="stylesheet" href="css/hero-background.css">
+    <link rel="stylesheet" href="css/animations.css">
+    <link rel="stylesheet" href="css/ecosystem.css">
+    <link rel="stylesheet" href="css/watermarks.css">
+    <link rel="stylesheet" href="css/role-based.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/leaflet/1.9.4/leaflet.min.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+</head>
+
+<body>
+    <!-- Floating Leaves Background -->
+    <div class="floating-leaves">
+        <div class="floating-leaf">🌿</div>
+        <div class="floating-leaf">🍃</div>
+        <div class="floating-leaf">🌿</div>
+        <div class="floating-leaf">🍃</div>
+        <div class="floating-leaf">🌿</div>
+        <div class="floating-leaf">🍃</div>
+    </div>
+
+    <!-- Location Permission Banner -->
+    <div id="locationBanner" class="location-banner" role="banner" aria-label="Location permission request">
+        <div class="banner-content">
+            <i class="fas fa-location-crosshairs" aria-hidden="true"></i>
+            <div class="banner-text">
+                <strong>Enable Location Services</strong>
+                <p>Allow location access to show nearby wetland violations and report issues accurately</p>
+            </div>
+            <div class="banner-actions">
+                <button class="btn-banner-allow" onclick="requestLocationPermission()"
+                    aria-label="Allow location access">Allow Location</button>
+                <button class="btn-banner-dismiss" onclick="dismissLocationBanner()"
+                    aria-label="Dismiss location permission banner">Maybe Later</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Navigation Bar -->
+    <nav class="navbar" role="navigation" aria-label="Main navigation">
+        <div class="nav-container">
+            <div class="logo" aria-label="WetlandGuard home">
+                <i class="fas fa-leaf" aria-hidden="true"></i>
+                <span>WetlandGuard</span>
+            </div>
+            <ul class="nav-menu">
+                <li><a href="#home" class="nav-link" data-i18n="nav.home">Home</a></li>
+                <li><a href="#report" class="nav-link role-user" style="display:none;" data-i18n="nav.report">Report
+                        Issue</a></li>
+                <li><a href="#map" class="nav-link" data-i18n="nav.map">Live Map</a></li>
+                <li><a href="#citizen-dash" class="nav-link role-user" style="display:none;"
+                        data-i18n="nav.myreports">My Reports</a></li>
+                <li><a href="#authority-dash" class="nav-link role-admin" style="display:none;"
+                        data-i18n="nav.authority">Authority</a></li>
+                <li><a href="#worker-dash" class="nav-link role-worker" style="display:none;"
+                        data-i18n="nav.worker">Field Teams</a></li>
+                <li id="userRoleDisplay" style="display:none;"><span id="roleLabel"
+                        style="color: #4a7c3b; font-weight: 600;"></span></li>
+                <li><a href="login.html" class="nav-link nav-login" id="logoutBtn" onclick="logout(event)"
+                        style="color: #e74c3c; font-weight: 600; display:none;">Logout</a></li>
+                <li><a href="login.html" class="nav-link nav-login" id="loginBtn"
+                        style="color: #4a7c3b; font-weight: 600;">Login</a></li>
+            </ul>
+            <div class="language-toggle">
+                <button class="lang-btn active" data-lang="en" aria-label="English">EN</button>
+                <button class="lang-btn" data-lang="hi" aria-label="हिंदी">HI</button>
+                <button class="lang-btn" data-lang="mr" aria-label="मराठी">MR</button>
+            </div>
+            <button class="hamburger" aria-label="Toggle navigation menu" aria-expanded="false">
+                <span></span>
+                <span></span>
+                <span></span>
+            </button>
+        </div>
+    </nav>
+
+    <!-- Hero Section -->
+    <section id="home" class="hero">
+        <div class="hero-background">
+            <video autoplay muted loop class="hero-bg-video">
+                <source src="https://videos.pexels.com/video-files/3571264/3571264-uhd_2560_1440_30fps.mp4"
+                    type="video/mp4">
+                <img src="https://images.unsplash.com/photo-1518837695005-2083093ee35b?ixlib=rb-4.0.3&auto=format&fit=crop&w=1920&q=80"
+                    alt="Wetland with grass and water" class="hero-bg-image">
+            </video>
+            <div class="hero-overlay"></div>
+        </div>
+
+        <!-- Watermarks -->
+        <div class="leaf-watermark top-right">🌿</div>
+        <div class="leaf-watermark bottom-left">🍃</div>
+        <div class="watermark hero-watermark green"><i class="fas fa-leaf"></i></div>
+        <div class="eco-circle-watermark" style="top: 20%; right: 10%;"></div>
+
+        <div class="hero-content">
+            <div class="hero-text">
+                <h1 class="hero-title" data-i18n="hero.title">Protect Wetlands.<br>Report Violations.<br>Track Action.
+                </h1>
+                <p class="hero-subtitle" data-i18n="hero.subtitle">Empower your community to safeguard wetlands. Report
+                    illegal dumping, sewage discharge, and unauthorized construction in real-time.</p>
+                <div class="hero-cta">
+                    <a href="#report" class="btn btn-primary" aria-label="Report a wetland violation">
+                        <i class="fas fa-flag" aria-hidden="true"></i> <span data-i18n="hero.reportbtn">Report an
+                            Issue</span>
+                    </a>
+                    <a href="#map" class="btn btn-secondary" aria-label="View the live wetland violations map">
+                        <i class="fas fa-map" aria-hidden="true"></i> <span data-i18n="hero.mapbtn">View Live Map</span>
+                    </a>
+                </div>
+            </div>
+            <div class="hero-visual">
+                <div class="hero-stats">
+                    <div class="stat-item">
+                        <span class="stat-number">2,450+</span>
+                        <span class="stat-label">Reports Filed</span>
+                    </div>
+                    <div class="stat-item">
+                        <span class="stat-number">1,850+</span>
+                        <span class="stat-label">Issues Resolved</span>
+                    </div>
+                    <div class="stat-item">
+                        <span class="stat-number">8,900+</span>
+                        <span class="stat-label">Community Members</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="scroll-indicator">
+            <span data-i18n="hero.scroll">Scroll to explore</span>
+            <i class="fas fa-chevron-down" aria-hidden="true"></i>
+        </div>
+    </section>
+
+    <!-- Info Cards Section -->
+    <section class="info-section" aria-labelledby="info-heading">
+        <!-- Watermarks -->
+        <div class="leaf-watermark top-left">🌿</div>
+        <div class="leaf-watermark bottom-right">🍃</div>
+        <div class="watermark section-watermark green" style="top: 30%; right: 5%;">
+            <i class="fas fa-water"></i>
+        </div>
+
+        <div class="container">
+            <h2 id="info-heading" data-i18n="info.title">Why WetlandGuard?</h2>
+            <div class="info-cards">
+                <article class="info-card">
+                    <div class="card-image">
+                        <img src="https://images.unsplash.com/photo-1586348943529-beaae6c28db9?ixlib=rb-4.0.3&auto=format&fit=crop&w=500&q=80"
+                            alt="Real-time reporting">
+                    </div>
+                    <div class="icon-box">
+                        <i class="fas fa-exclamation-triangle" aria-hidden="true"></i>
+                    </div>
+                    <h3 data-i18n="info.card1title">Real-Time Reporting</h3>
+                    <p data-i18n="info.card1desc">Report wetland violations instantly with photos and location data</p>
+                </article>
+                <article class="info-card">
+                    <div class="card-image">
+                        <img src="https://images.unsplash.com/photo-1524661135-423995f22d0b?ixlib=rb-4.0.3&auto=format&fit=crop&w=500&q=80"
+                            alt="Live map tracking">
+                    </div>
+                    <div class="icon-box">
+                        <i class="fas fa-map-marked-alt" aria-hidden="true"></i>
+                    </div>
+                    <h3 data-i18n="info.card2title">Live Map Tracking</h3>
+                    <p data-i18n="info.card2desc">View reported violations on an interactive map with color-coded
+                        categories</p>
+                </article>
+                <article class="info-card">
+                    <div class="card-image">
+                        <img src="https://images.unsplash.com/photo-1551288049-bebda4e38f71?ixlib=rb-4.0.3&auto=format&fit=crop&w=500&q=80"
+                            alt="Progress tracking">
+                    </div>
+                    <div class="icon-box">
+                        <i class="fas fa-chart-line" aria-hidden="true"></i>
+                    </div>
+                    <h3 data-i18n="info.card3title">Progress Tracking</h3>
+                    <p data-i18n="info.card3desc">Monitor action status from report to resolution</p>
+                </article>
+                <article class="info-card">
+                    <div class="card-image">
+                        <img src="https://images.unsplash.com/photo-1582213782179-e0d53f98f2ca?ixlib=rb-4.0.3&auto=format&fit=crop&w=500&q=80"
+                            alt="Community power">
+                    </div>
+                    <div class="icon-box">
+                        <i class="fas fa-shield-alt" aria-hidden="true"></i>
+                    </div>
+                    <h3 data-i18n="info.card4title">Community Power</h3>
+                    <p data-i18n="info.card4desc">Strengthen environmental protection through collective action</p>
+                </article>
+            </div>
+        </div>
+    </section>
+
+    <!-- Ecosystem Benefits Section -->
+    <section class="ecosystem-section">
+        <!-- Watermarks -->
+        <div class="leaf-watermark top-right">🌿</div>
+        <div class="leaf-watermark bottom-left">🍃</div>
+        <div class="watermark section-watermark blue" style="top: 40%; left: 5%; opacity: 0.08;">
+            <i class="fas fa-fish"></i>
+        </div>
+        <div class="eco-circle-watermark" style="bottom: 10%; right: 5%;"></div>
+
+        <div class="container">
+            <h2 class="ecosystem-title">🌍 Protecting Our Ecosystems</h2>
+            <p class="ecosystem-subtitle">Wetlands are vital habitats. Here's what you're protecting:</p>
+            <div class="ecosystem-grid">
+                <div class="ecosystem-card">
+                    <div class="ecosystem-icon">
+                        <i class="fas fa-water"></i>
+                    </div>
+                    <h3>Water Filtration</h3>
+                    <p>Wetlands purify water naturally, removing pollutants and sediments that would otherwise
+                        contaminate our drinking water sources.</p>
+                    <div class="stat-box">
+                        <span class="stat-number">75%</span>
+                        <span class="stat-text">water purification</span>
+                    </div>
+                </div>
+                <div class="ecosystem-card">
+                    <div class="ecosystem-icon">
+                        <i class="fas fa-leaf"></i>
+                    </div>
+                    <h3>Biodiversity Hub</h3>
+                    <p>Wetlands support 40% of all species despite covering only 6% of Earth's surface. They're home to
+                        birds, fish, amphibians, and plants.</p>
+                    <div class="stat-box">
+                        <span class="stat-number">40%</span>
+                        <span class="stat-text">of species</span>
+                    </div>
+                </div>
+                <div class="ecosystem-card">
+                    <div class="ecosystem-icon">
+                        <i class="fas fa-cloud"></i>
+                    </div>
+                    <h3>Climate Regulation</h3>
+                    <p>Wetlands store twice as much carbon as forests. Protecting them helps combat climate change and
+                        stabilize our global temperature.</p>
+                    <div class="stat-box">
+                        <span class="stat-number">2x</span>
+                        <span class="stat-text">carbon storage</span>
+                    </div>
+                </div>
+                <div class="ecosystem-card">
+                    <div class="ecosystem-icon">
+                        <i class="fas fa-fish"></i>
+                    </div>
+                    <h3>Food Security</h3>
+                    <p>Wetlands provide crucial breeding grounds for fish and shellfish species that feed millions of
+                        people worldwide.</p>
+                    <div class="stat-box">
+                        <span class="stat-number">3B+</span>
+                        <span class="stat-text">people depend</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Join the Movement Section -->
+    <section class="join-movement-section">
+        <div class="movement-overlay">
+            <div class="container">
+                <div class="movement-content">
+                    <h2 class="movement-title">Join the Movement</h2>
+                    <p class="movement-subtitle">Help protect our wetlands by reporting violations and tracking
+                        environmental action in real-time.</p>
+
+                    <div class="movement-features">
+                        <div class="movement-feature">
+                            <i class="fas fa-map-marker-alt"></i>
+                            <h3>Real-Time Reporting</h3>
+                            <p>Report violations instantly with location and photos</p>
+                        </div>
+                        <div class="movement-feature">
+                            <i class="fas fa-chart-line"></i>
+                            <h3>Track Progress</h3>
+                            <p>Monitor action status from report to resolution</p>
+                        </div>
+                        <div class="movement-feature">
+                            <i class="fas fa-globe"></i>
+                            <h3>Community Impact</h3>
+                            <p>See how your reports help protect ecosystems</p>
+                        </div>
+                    </div>
+
+                    <div class="movement-stats">
+                        <div class="stat-item">
+                            <span class="stat-number">2,450+</span>
+                            <span class="stat-label">Reports Filed</span>
+                        </div>
+                        <div class="stat-item">
+                            <span class="stat-number">1,850+</span>
+                            <span class="stat-label">Issues Resolved</span>
+                        </div>
+                        <div class="stat-item">
+                            <span class="stat-number">8,900+</span>
+                            <span class="stat-label">Community Members</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Report a Wetland Violation Section -->
+    <section id="report" class="report-section">
+        <!-- Watermarks -->
+        <div class="leaf-watermark top-left">🍃</div>
+        <div class="leaf-watermark bottom-right">🌿</div>
+        <div class="watermark section-watermark green" style="top: 25%; right: 8%; opacity: 0.07;">
+            <i class="fas fa-leaf"></i>
+        </div>
+
+        <div class="container">
+            <div class="section-header">
+                <h2 data-i18n="report.title">Report a Wetland Violation</h2>
+                <p data-i18n="report.subtitle">Help protect our wetlands. Share details about the violation you've
+                    witnessed.</p>
+            </div>
+
+            <div class="report-form-wrapper">
+                <!-- Progress Indicator -->
+                <div class="form-progress">
+                    <div class="progress-step active" data-step="1">
+                        <div class="step-number">1</div>
+                        <div class="step-label" data-i18n="report.step1">Issue Type</div>
+                    </div>
+                    <div class="progress-line"></div>
+                    <div class="progress-step" data-step="2">
+                        <div class="step-number">2</div>
+                        <div class="step-label" data-i18n="report.step2">Details</div>
+                    </div>
+                    <div class="progress-line"></div>
+                    <div class="progress-step" data-step="3">
+                        <div class="step-number">3</div>
+                        <div class="step-label" data-i18n="report.step3">Location & Contact</div>
+                    </div>
+                </div>
+
+                <!-- Report Form -->
+                <form id="reportForm" class="report-form enhanced-form" aria-label="Wetland violation report form">
+
+                    <!-- Step 1: Issue Type Selection -->
+                    <fieldset class="form-section">
+                        <legend data-i18n="report.issuetype">Issue Type <span aria-label="required"
+                                style="color: #e74c3c;">*</span></legend>
+                        <div class="issue-type-buttons enhanced-buttons">
+                            <input type="radio" id="dumping" name="issueType" value="dumping" required
+                                aria-label="Report illegal dumping">
+                            <label for="dumping" class="issue-btn dumping-btn enhanced-btn">
+                                <i class="fas fa-trash" aria-hidden="true"></i>
+                                <span data-i18n="report.dumping">Illegal Dumping</span>
+                                <small data-i18n="report.dumpingdesc">Waste disposal in wetlands</small>
+                            </label>
+
+                            <input type="radio" id="sewage" name="issueType" value="sewage" required
+                                aria-label="Report sewage discharge">
+                            <label for="sewage" class="issue-btn sewage-btn enhanced-btn">
+                                <i class="fas fa-water" aria-hidden="true"></i>
+                                <span data-i18n="report.sewage">Sewage Discharge</span>
+                                <small data-i18n="report.sewagedesc">Untreated water discharge</small>
+                            </label>
+
+                            <input type="radio" id="construction" name="issueType" value="construction" required
+                                aria-label="Report illegal construction">
+                            <label for="construction" class="issue-btn construction-btn enhanced-btn">
+                                <i class="fas fa-hard-hat" aria-hidden="true"></i>
+                                <span data-i18n="report.construction">Illegal Construction</span>
+                                <small data-i18n="report.constructiondesc">Unauthorized building activity</small>
+                            </label>
+                        </div>
+                    </fieldset>
+
+                    <!-- Step 2: Description Field -->
+                    <div class="form-section">
+                        <label for="description">
+                            <span data-i18n="report.description">Description</span>
+                            <span aria-label="required" style="color: #e74c3c;">*</span>
+                        </label>
+                        <div class="textarea-wrapper">
+                            <textarea id="description" name="description"
+                                placeholder="Describe the violation in detail..." rows="5" required aria-required="true"
+                                maxlength="500"></textarea>
+                            <div class="char-counter">
+                                <span id="charCount">0</span> / 500
+                            </div>
+                        </div>
+                        <small class="hint" data-i18n="report.descriptionhint">Provide as much detail as possible to
+                            help us understand the issue</small>
+                    </div>
+
+                    <!-- Photo Upload -->
+                    <div class="form-section">
+                        <label for="imageUpload">
+                            <span data-i18n="report.photo">Upload Photo</span>
+                            <span class="optional" data-i18n="report.optional">(Optional)</span>
+                        </label>
+                        <div class="image-upload-area enhanced-upload">
+                            <input type="file" id="imageUpload" name="imageUpload" accept="image/*" class="file-input"
+                                multiple aria-label="Upload violation photos">
+                            <div class="upload-placeholder">
+                                <i class="fas fa-cloud-upload-alt" aria-hidden="true"></i>
+                                <p data-i18n="report.dragdrop">Drag & drop your images here or click to browse</p>
+                                <span data-i18n="report.photoinfo">Max 5MB each | JPG, PNG, WebP</span>
+                            </div>
+                        </div>
+                        <div class="camera-actions"
+                            style="margin-top: 15px; display: flex; gap: 10px; justify-content: center;">
+                            <button type="button" id="startCameraBtn" class="btn btn-secondary"
+                                style="background-color: #27ae60;">
+                                <i class="fas fa-camera"></i> <span data-i18n="report.camera">Live Camera</span>
+                            </button>
+                        </div>
+                        <div id="cameraContainer" class="camera-container"
+                            style="display: none; margin-top: 15px; position: relative;">
+                            <video id="cameraVideo" autoplay playsinline
+                                style="width: 100%; border-radius: 12px; background: #000;"></video>
+                            <canvas id="cameraCanvas" style="display: none;"></canvas>
+                            <div class="camera-controls"
+                                style="position: absolute; bottom: 20px; left: 0; right: 0; display: flex; justify-content: center; gap: 15px;">
+                                <button type="button" id="capturePhotoBtn" class="btn btn-primary" title="Capture"
+                                    style="border-radius: 50%; width: 60px; height: 60px; display: flex; align-items: center; justify-content: center;">
+                                    <i class="fas fa-circle" style="font-size: 1.5rem;"></i>
+                                </button>
+                                <button type="button" id="stopCameraBtn" class="btn btn-secondary" title="Close"
+                                    style="border-radius: 50%; width: 60px; height: 60px; display: flex; align-items: center; justify-content: center; background-color: #e74c3c;">
+                                    <i class="fas fa-times" style="font-size: 1.5rem;"></i>
+                                </button>
+                            </div>
+                        </div>
+                        <div id="imagePreview" class="image-preview"></div>
+                    </div>
+
+                    <!-- Step 3: Location Field -->
+                    <div class="form-section">
+                        <label for="location">
+                            <span data-i18n="report.location">Location</span>
+                            <span aria-label="required" style="color: #e74c3c;">*</span>
+                        </label>
+                        <div class="location-input-group enhanced-location">
+                            <input type="text" id="location" name="location"
+                                placeholder="Enter location or use geolocation" required aria-required="true">
+                            <button type="button" id="geolocateBtn" class="btn-geo"
+                                aria-label="Auto-detect current location">
+                                <i class="fas fa-location-dot" aria-hidden="true"></i>
+                                <span data-i18n="report.autodetect">Auto-Detect</span>
+                            </button>
+                        </div>
+                        <div id="coordsDisplay" class="coords-display"></div>
+                        <small class="hint" data-i18n="report.locationhint">Accurate location helps authorities respond
+                            quickly</small>
+                    </div>
+
+                    <!-- Contact Information -->
+                    <fieldset class="form-section contact-section">
+                        <legend data-i18n="report.contact">Contact Information <span class="optional"
+                                data-i18n="report.optional">(Optional)</span></legend>
+                        <div class="contact-grid">
+                            <div class="form-group">
+                                <label for="name" data-i18n="report.name">Your Name</label>
+                                <input type="text" id="name" name="name">
+                                <small class="hint" data-i18n="report.namehint">We can follow up with you</small>
+                            </div>
+                            <div class="form-group">
+                                <label for="email" data-i18n="report.email">Email</label>
+                                <input type="email" id="email" name="email">
+                                <small class="hint" data-i18n="report.emailhint">To receive status updates</small>
+                            </div>
+                            <div class="form-group">
+                                <label for="phone" data-i18n="report.phone">Phone</label>
+                                <input type="tel" id="phone" name="phone">
+                                <small class="hint" data-i18n="report.phonehint">For urgent communication</small>
+                            </div>
+                        </div>
+                    </fieldset>
+
+                    <!-- Important Notice -->
+                    <div class="form-notice" role="alert">
+                        <i class="fas fa-info-circle" aria-hidden="true"></i>
+                        <div>
+                            <strong data-i18n="report.notice">Important:</strong>
+                            <span data-i18n="report.noticetext">Please ensure all information is accurate. False reports
+                                may have legal consequences.</span>
+                        </div>
+                    </div>
+
+                    <!-- Submit Button -->
+                    <button type="submit" class="btn btn-primary btn-submit enhanced-btn-submit"
+                        aria-label="Submit your wetland violation report">
+                        <i class="fas fa-paper-plane" aria-hidden="true"></i>
+                        <span data-i18n="report.submit">Submit Report</span>
+                    </button>
+                </form>
+
+                <!-- Success Message (Hidden by default) -->
+                <div id="successMessage" class="success-message" style="display: none;" role="alert" aria-live="polite">
+                    <div class="success-content">
+                        <div class="success-icon">
+                            <i class="fas fa-check-circle" aria-hidden="true"></i>
+                        </div>
+                        <h3 data-i18n="report.success">Report Submitted Successfully!</h3>
+                        <p data-i18n="report.successtext">Thank you for helping protect our wetlands. Your report has
+                            been recorded and will be reviewed by authorities.</p>
+                        <div class="success-details">
+                            <p><strong data-i18n="report.refnumber">Reference Number:</strong> <span
+                                    id="refNumber"></span></p>
+                            <p><strong data-i18n="report.submitted">Submitted at:</strong> <span id="submitTime"></span>
+                            </p>
+                        </div>
+                        <button class="btn btn-secondary" onclick="resetForm();">
+                            <i class="fas fa-plus" aria-hidden="true"></i>
+                            <span data-i18n="report.another">Submit Another Report</span>
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Live Map Section -->
+    <section id="map" class="map-section">
+        <!-- Watermarks -->
+        <div class="leaf-watermark top-right">🌿</div>
+        <div class="watermark section-watermark blue" style="top: 35%; left: 3%; opacity: 0.06;">
+            <i class="fas fa-water"></i>
+        </div>
+        <div class="eco-circle-watermark" style="bottom: 15%; right: 10%;"></div>
+
+        <div class="section-header">
+            <h2 data-i18n="map.title">Live Violation Map</h2>
+            <p data-i18n="map.subtitle">Interactive map showing reported wetland violations across the region</p>
+        </div>
+
+        <div class="map-container">
+            <div id="mapElement" class="map" role="application" aria-label="Interactive map of wetland violations">
+            </div>
+
+            <!-- My Location Button -->
+            <button id="myLocationBtn" class="my-location-btn" title="Show my location"
+                aria-label="Center map on my current location">
+                <i class="fas fa-location-crosshairs" aria-hidden="true"></i>
+            </button>
+
+            <!-- Legend -->
+            <div class="map-legend" role="region" aria-label="Map legend">
+                <div class="legend-title" data-i18n="map.legend">
+                    <i class="fas fa-list" aria-hidden="true"></i> Report Categories
+                </div>
+                <div class="legend-item dumping">
+                    <div class="legend-marker dumping-marker"></div>
+                    <span data-i18n="map.dumping">Illegal Dumping</span>
+                </div>
+                <div class="legend-item sewage">
+                    <div class="legend-marker sewage-marker"></div>
+                    <span data-i18n="map.sewage">Sewage Discharge</span>
+                </div>
+                <div class="legend-item construction">
+                    <div class="legend-marker construction-marker"></div>
+                    <span data-i18n="map.construction">Illegal Construction</span>
+                </div>
+            </div>
+        </div>
+
+        <!-- Marker Details Modal -->
+        <div id="markerModal" class="modal" role="dialog" aria-labelledby="markerModalTitle" aria-hidden="true">
+            <div class="modal-content">
+                <button class="close-modal" aria-label="Close dialog">&times;</button>
+                <div class="modal-body" id="markerDetails"></div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Image Viewer Modal -->
+    <div id="imageViewerModal" class="modal" role="dialog" aria-hidden="true">
+        <div class="modal-content image-viewer-content" style="max-width: 90vw; max-height: 90vh; padding: 10px;">
+            <button class="close-modal" onclick="closeImageViewer()" aria-label="Close viewer">&times;</button>
+            <div id="imageViewerBody" style="display: flex; flex-direction: column; align-items: center;">
+                <img id="fullViewImage" src="" alt="Full View"
+                    style="max-width: 100%; max-height: 70vh; border-radius: 8px; object-fit: contain;">
+                <div id="imageViewerMeta" style="margin-top: 15px; text-align: center; color: var(--dark-text);"></div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Citizen Dashboard Section -->
+    <section id="citizen-dash" class="dashboard citizen-dashboard role-user" style="display:none;">
+        <!-- Watermarks -->
+        <div class="leaf-watermark top-left">🍃</div>
+        <div class="leaf-watermark bottom-right">🌿</div>
+        <div class="watermark section-watermark light-green" style="top: 30%; right: 5%; opacity: 0.06;">
+            <i class="fas fa-chart-line"></i>
+        </div>
+
+        <div class="container">
+            <div class="dashboard-header">
+                <h2 data-i18n="citizen.title">My Reports</h2>
+                <div class="stats-row">
+                    <div class="stat-card">
+                        <div class="stat-number" id="totalReports">0</div>
+                        <div class="stat-label" data-i18n="citizen.totalreports">Total Reports</div>
+                    </div>
+                    <div class="stat-card">
+                        <div class="stat-number" id="reviewingReports">0</div>
+                        <div class="stat-label" data-i18n="citizen.underreview">Under Review</div>
+                    </div>
+                    <div class="stat-card">
+                        <div class="stat-number" id="actionReports">0</div>
+                        <div class="stat-label" data-i18n="citizen.actiontaken">Action Taken</div>
+                    </div>
+                    <div class="stat-card">
+                        <div class="stat-number" id="resolvedReports">0</div>
+                        <div class="stat-label" data-i18n="citizen.resolved">Resolved</div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Filters -->
+            <div class="dashboard-filters" role="group" aria-label="Report status filters">
+                <button class="filter-btn active" data-filter="all" data-i18n="citizen.allreports">All Reports</button>
+                <button class="filter-btn" data-filter="reported" data-i18n="citizen.reported">Reported</button>
+                <button class="filter-btn" data-filter="review" data-i18n="citizen.review">Under Review</button>
+                <button class="filter-btn" data-filter="action" data-i18n="citizen.action">Action Taken</button>
+                <button class="filter-btn" data-filter="resolved" data-i18n="citizen.resolved">Resolved</button>
+            </div>
+
+            <!-- Reports Cards -->
+            <div class="reports-grid" id="citizenReportsGrid" role="region" aria-label="My reports">
+                <!-- Reports will be dynamically inserted here -->
+            </div>
+        </div>
+    </section>
+
+    <!-- Authority Admin Dashboard Section -->
+    <section id="authority-dash" class="dashboard authority-dashboard role-admin" style="display:none;">
+        <!-- Watermarks -->
+        <div class="leaf-watermark top-right">🌿</div>
+        <div class="leaf-watermark bottom-left">🍃</div>
+        <div class="watermark section-watermark green" style="top: 25%; right: 5%; opacity: 0.07;">
+            <i class="fas fa-shield-alt"></i>
+        </div>
+        <div class="eco-circle-watermark" style="bottom: 5%; right: 3%;"></div>
+
+        <div class="container">
+            <!-- Header with Role Indicator -->
+            <div class="dashboard-header authority-header">
+                <div class="header-left">
+                    <h2 data-i18n="authority.title">Authority Control Center</h2>
+                    <span class="badge admin-badge">
+                        <i class="fas fa-shield-alt" aria-hidden="true"></i> <span
+                            data-i18n="authority.adminaccess">ADMIN ACCESS</span>
+                    </span>
+                </div>
+                <div class="header-right">
+                    <button class="btn btn-secondary btn-sm" aria-label="Export all reports">
+                        <i class="fas fa-download" aria-hidden="true"></i> <span
+                            data-i18n="authority.export">Export</span>
+                    </button>
+                </div>
+            </div>
+
+            <!-- Analytics Dashboard -->
+            <div class="analytics-section">
+                <div class="analytics-grid">
+                    <!-- Total Reports Card -->
+                    <div class="analytics-card primary">
+                        <div class="analytics-content">
+                            <div class="analytics-number" id="authTotalReports">0</div>
+                            <div class="analytics-label" data-i18n="authority.totalreports">Total Reports</div>
+                            <div class="analytics-trend">
+                                <i class="fas fa-arrow-up" aria-hidden="true"></i> This Month
+                            </div>
+                        </div>
+                        <div class="analytics-icon">
+                            <i class="fas fa-file-alt" aria-hidden="true"></i>
+                        </div>
+                    </div>
+
+                    <!-- Pending Review Card -->
+                    <div class="analytics-card warning">
+                        <div class="analytics-content">
+                            <div class="analytics-number" id="authPendingReports">0</div>
+                            <div class="analytics-label" data-i18n="authority.pendingreview">Pending Review</div>
+                            <div class="analytics-trend">Needs Attention</div>
+                        </div>
+                        <div class="analytics-icon">
+                            <i class="fas fa-hourglass-half" aria-hidden="true"></i>
+                        </div>
+                    </div>
+
+                    <!-- In Progress Card -->
+                    <div class="analytics-card info">
+                        <div class="analytics-content">
+                            <div class="analytics-number" id="authInProgressReports">0</div>
+                            <div class="analytics-label" data-i18n="authority.inprogress">In Progress</div>
+                            <div class="analytics-trend">Action Underway</div>
+                        </div>
+                        <div class="analytics-icon">
+                            <i class="fas fa-spinner" aria-hidden="true"></i>
+                        </div>
+                    </div>
+
+                    <!-- Resolved Card -->
+                    <div class="analytics-card success">
+                        <div class="analytics-content">
+                            <div class="analytics-number" id="authResolvedReports">0</div>
+                            <div class="analytics-label" data-i18n="authority.resolved">Resolved</div>
+                            <div class="analytics-trend">Completed</div>
+                        </div>
+                        <div class="analytics-icon">
+                            <i class="fas fa-check-circle" aria-hidden="true"></i>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Category Breakdown -->
+                <div class="category-stats">
+                    <h3 data-i18n="authority.violations">Violations by Category</h3>
+                    <div class="category-grid">
+                        <div class="category-stat dumping">
+                            <i class="fas fa-trash" aria-hidden="true"></i>
+                            <span class="category-name" data-i18n="map.dumping">Illegal Dumping</span>
+                            <span class="category-count" id="dumpingCount">0</span>
+                        </div>
+                        <div class="category-stat sewage">
+                            <i class="fas fa-water" aria-hidden="true"></i>
+                            <span class="category-name" data-i18n="map.sewage">Sewage Discharge</span>
+                            <span class="category-count" id="sewageCount">0</span>
+                        </div>
+                        <div class="category-stat construction">
+                            <i class="fas fa-hard-hat" aria-hidden="true"></i>
+                            <span class="category-name" data-i18n="map.construction">Illegal Construction</span>
+                            <span class="category-count" id="constructionCount">0</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Advanced Filtering & Controls -->
+            <div class="authority-controls">
+                <div class="controls-header">
+                    <h3 data-i18n="authority.managereports">Manage Reports</h3>
+                </div>
+
+                <div class="controls-grid">
+                    <!-- Status Filter -->
+                    <div class="control-group">
+                        <label for="statusFilter" class="control-label">
+                            <i class="fas fa-filter" aria-hidden="true"></i> <span
+                                data-i18n="authority.status">Status</span>
+                        </label>
+                        <select id="statusFilter" class="filter-select" aria-label="Filter by report status">
+                            <option value="all">All Status</option>
+                            <option value="reported" data-i18n="citizen.reported">Reported</option>
+                            <option value="review" data-i18n="citizen.review">Under Review</option>
+                            <option value="action" data-i18n="citizen.action">Action Taken</option>
+                            <option value="resolved" data-i18n="citizen.resolved">Resolved</option>
+                        </select>
+                    </div>
+
+                    <!-- Type Filter -->
+                    <div class="control-group">
+                        <label for="typeFilter" class="control-label">
+                            <i class="fas fa-list" aria-hidden="true"></i> <span data-i18n="authority.type">Violation
+                                Type</span>
+                        </label>
+                        <select id="typeFilter" class="filter-select" aria-label="Filter by violation type">
+                            <option value="all">All Types</option>
+                            <option value="dumping" data-i18n="map.dumping">Illegal Dumping</option>
+                            <option value="sewage" data-i18n="map.sewage">Sewage Discharge</option>
+                            <option value="construction" data-i18n="map.construction">Illegal Construction</option>
+                        </select>
+                    </div>
+
+                    <!-- Priority Filter -->
+                    <div class="control-group">
+                        <label for="priorityFilter" class="control-label">
+                            <i class="fas fa-exclamation" aria-hidden="true"></i> <span
+                                data-i18n="authority.priority">Priority</span>
+                        </label>
+                        <select id="priorityFilter" class="filter-select" aria-label="Filter by priority">
+                            <option value="all">All Priority</option>
+                            <option value="high">High</option>
+                            <option value="medium">Medium</option>
+                            <option value="low">Low</option>
+                        </select>
+                    </div>
+
+                    <!-- Search -->
+                    <div class="control-group search-group">
+                        <label for="reportSearch" class="control-label">
+                            <i class="fas fa-search" aria-hidden="true"></i> <span
+                                data-i18n="authority.search">Search</span>
+                        </label>
+                        <input type="text" id="reportSearch" class="filter-select"
+                            placeholder="Search by ID, location, reporter..." aria-label="Search reports">
+                    </div>
+                </div>
+
+                <!-- Bulk Actions -->
+                <div class="bulk-actions">
+                    <button class="btn btn-sm btn-outline" aria-label="Select all visible reports">
+                        <i class="fas fa-check-square" aria-hidden="true"></i> <span
+                            data-i18n="authority.selectall">Select All</span>
+                    </button>
+                    <button class="btn btn-sm btn-outline" aria-label="Bulk status update">
+                        <i class="fas fa-sync" aria-hidden="true"></i> <span data-i18n="authority.bulkupdate">Bulk
+                            Update Status</span>
+                    </button>
+                    <button class="btn btn-sm btn-outline" aria-label="Assign reports to team">
+                        <i class="fas fa-user-plus" aria-hidden="true"></i> <span
+                            data-i18n="authority.assignteam">Assign to Team</span>
+                    </button>
+                </div>
+            </div>
+
+            <!-- Enhanced Reports Table -->
+            <div class="table-wrapper authority-table-wrapper">
+                <div class="table-header">
+                    <h3 data-i18n="authority.allreports">All Reports</h3>
+                    <span class="table-count" id="reportCount">0 <span
+                            data-i18n="authority.reports">reports</span></span>
+                </div>
+                <table class="reports-table authority-reports-table" id="reportsTable" role="table">
+                    <thead>
+                        <tr role="row">
+                            <th role="columnheader">
+                                <input type="checkbox" aria-label="Select all reports" class="select-all-checkbox">
+                            </th>
+                            <th role="columnheader" data-i18n="authority.id">ID</th>
+                            <th role="columnheader" data-i18n="authority.type">Type</th>
+                            <th role="columnheader">Location</th>
+                            <th role="columnheader" data-i18n="authority.reporter">Reporter</th>
+                            <th role="columnheader" data-i18n="authority.submitted">Submitted</th>
+                            <th role="columnheader" data-i18n="authority.status">Status</th>
+                            <th role="columnheader" data-i18n="authority.priority">Priority</th>
+                            <th role="columnheader" data-i18n="authority.action">Actions</th>
+                        </tr>
+                    </thead>
+                    <tbody id="tableBody">
+                        <!-- Reports will be inserted here -->
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </section>
+
+    <!-- Status Update Modal -->
+    <div id="statusModal" class="modal" role="dialog" aria-labelledby="statusModalTitle" aria-hidden="true">
+        <div class="modal-content small">
+            <button class="close-modal" aria-label="Close dialog">&times;</button>
+            <h3 id="statusModalTitle">Update Report Status</h3>
+            <select id="newStatus" class="filter-select" aria-label="Select new report status">
+                <option value="reported">Reported</option>
+                <option value="review">Under Review</option>
+                <option value="action">Action Taken</option>
+                <option value="resolved">Resolved</option>
+            </select>
+            <textarea id="statusComment" placeholder="Add a comment (optional)" rows="3"
+                aria-label="Status update comment"></textarea>
+            <div class="modal-actions">
+                <button class="btn btn-secondary" onclick="closeStatusModal()"
+                    aria-label="Cancel status update">Cancel</button>
+                <button class="btn btn-primary" onclick="updateReportStatus()" aria-label="Update report status">Update
+                    Status</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Worker Field Team Dashboard Section -->
+    <section id="worker-dash" class="dashboard worker-dashboard role-worker" style="display:none;">
+        <!-- Watermarks -->
+        <div class="leaf-watermark top-left">🌿</div>
+        <div class="leaf-watermark bottom-right">🍃</div>
+        <div class="watermark section-watermark light-green" style="top: 30%; right: 5%; opacity: 0.06;">
+            <i class="fas fa-hammer"></i>
+        </div>
+
+        <div class="container">
+            <div class="dashboard-header">
+                <h2>Field Team Dashboard</h2>
+                <span class="badge worker-badge">
+                    <i class="fas fa-hammer"></i> FIELD WORKER
+                </span>
+                <div class="stats-row">
+                    <div class="stat-card">
+                        <div class="stat-number" id="assignedTasks">0</div>
+                        <div class="stat-label">Assigned Tasks</div>
+                    </div>
+                    <div class="stat-card">
+                        <div class="stat-number" id="completedTasks">0</div>
+                        <div class="stat-label">Completed</div>
+                    </div>
+                    <div class="stat-card">
+                        <div class="stat-number" id="inProgressTasks">0</div>
+                        <div class="stat-label">In Progress</div>
+                    </div>
+                    <div class="stat-card">
+                        <div class="stat-number" id="photoRecords">0</div>
+                        <div class="stat-label">Photos Uploaded</div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Task Filters -->
+            <div class="dashboard-filters" role="group" aria-label="Task status filters">
+                <button class="filter-btn active" data-filter="all">All Tasks</button>
+                <button class="filter-btn" data-filter="assigned">Assigned</button>
+                <button class="filter-btn" data-filter="in-progress">In Progress</button>
+                <button class="filter-btn" data-filter="completed">Completed</button>
+            </div>
+
+            <!-- Worker Tasks -->
+            <div class="worker-tasks" id="workerTasksGrid" role="region" aria-label="Field worker tasks">
+                <!-- Tasks will be dynamically inserted here -->
+            </div>
+        </div>
+    </section>
+
+    <!-- Before & After Photo Gallery (Admin Only) -->
+    <section id="photos-gallery" class="dashboard photos-gallery role-admin" style="display:none;">
+        <!-- Watermarks -->
+        <div class="leaf-watermark top-right">🌿</div>
+        <div class="leaf-watermark bottom-left">🍃</div>
+
+        <div class="container">
+            <div class="dashboard-header">
+                <h2>Wetland Restoration Progress</h2>
+                <span class="badge admin-badge">
+                    <i class="fas fa-camera"></i> BEFORE & AFTER
+                </span>
+                <button class="btn btn-primary" onclick="openPhotoUpload()" style="margin-left: auto;">
+                    <i class="fas fa-plus"></i> Upload Photos
+                </button>
+            </div>
+
+            <!-- Photo Upload Modal -->
+            <div id="photoUploadModal" class="modal" style="display:none;">
+                <div class="modal-content photo-upload-form">
+                    <div class="modal-header">
+                        <h3>Upload Before & After Photos</h3>
+                        <button class="modal-close" onclick="closePhotoUpload()">&times;</button>
+                    </div>
+                    <div class="modal-body">
+                        <form id="photoUploadForm">
+                            <div class="form-group">
+                                <label for="reportSelect">Select Report:</label>
+                                <select id="reportSelect" required>
+                                    <option value="">-- Choose a report --</option>
+                                </select>
+                            </div>
+
+                            <div class="photo-upload-section">
+                                <div class="form-group">
+                                    <label>Before Photo:</label>
+                                    <div class="photo-upload-box"
+                                        onclick="document.getElementById('beforePhoto').click()">
+                                        <i class="fas fa-camera"></i>
+                                        <p>Click to upload BEFORE photo</p>
+                                        <input type="file" id="beforePhoto" accept="image/*" style="display:none;">
+                                    </div>
+                                    <div id="beforePreview" class="photo-preview"></div>
+                                </div>
+
+                                <div class="form-group">
+                                    <label>After Photo:</label>
+                                    <div class="photo-upload-box"
+                                        onclick="document.getElementById('afterPhoto').click()">
+                                        <i class="fas fa-camera"></i>
+                                        <p>Click to upload AFTER photo</p>
+                                        <input type="file" id="afterPhoto" accept="image/*" style="display:none;">
+                                    </div>
+                                    <div id="afterPreview" class="photo-preview"></div>
+                                </div>
+                            </div>
+
+                            <div class="form-group">
+                                <label for="description">Restoration Details:</label>
+                                <textarea id="description" placeholder="Describe the restoration work done..."
+                                    rows="4"></textarea>
+                            </div>
+
+                            <div class="form-group">
+                                <label for="date">Date Completed:</label>
+                                <input type="date" id="date" required>
+                            </div>
+
+                            <div class="modal-footer">
+                                <button type="button" class="btn btn-secondary"
+                                    onclick="closePhotoUpload()">Cancel</button>
+                                <button type="submit" class="btn btn-primary">Upload Photos</button>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Photos Grid -->
+            <div class="photos-grid" id="photoGallery" role="region" aria-label="Restoration photo gallery">
+                <!-- Before & After photos will be displayed here -->
+            </div>
+        </div>
+    </section>
+
+    <!-- Main Footer -->
+    <footer class="footer" role="contentinfo">
+        <!-- Watermarks -->
+        <div class="leaf-watermark top-left" style="opacity: 0.25; color: rgba(255,255,255,0.3);">🌿</div>
+        <div class="leaf-watermark bottom-right" style="opacity: 0.25; color: rgba(255,255,255,0.3);">🍃</div>
+        <div class="watermark footer-watermark" style="top: 20%; right: 5%;">
+            <i class="fas fa-leaf"></i>
+        </div>
+        <div class="eco-circle-watermark" style="bottom: 10%; left: 5%; border-color: rgba(255,255,255,0.2);"></div>
+
+        <div class="footer-content">
+            <div class="footer-section">
+                <h4 data-i18n="footer.title">WetlandGuard</h4>
+                <p data-i18n="footer.desc">Protecting wetlands through community action.</p>
+            </div>
+            <div class="footer-section">
+                <h4 data-i18n="footer.links">Quick Links</h4>
+                <ul>
+                    <li><a href="#home" data-i18n="nav.home">Home</a></li>
+                    <li><a href="#report" data-i18n="nav.report">Report Issue</a></li>
+                    <li><a href="#map" data-i18n="nav.map">Live Map</a></li>
+                </ul>
+            </div>
+            <div class="footer-section">
+                <h4 data-i18n="footer.contact">Contact</h4>
+                <address>
+                    <p data-i18n="footer.email">Email: info@wetlandguard.local</p>
+                    <p data-i18n="footer.phone">Phone: (555) 123-GUARD</p>
+                </address>
+            </div>
+        </div>
+        <div class="footer-bottom">
+            <p data-i18n="footer.copyright">&copy; 2026 WetlandGuard. Protecting ecosystems for future generations.</p>
+        </div>
+    </footer>
+
+    <!-- Scripts -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/leaflet/1.9.4/leaflet.min.js" defer></script>
+    <script src="js/translations.js" defer></script>
+    <script src="js/script.js" defer></script>
+
+    <!-- AI Chatbot UI -->
+    <div id="chatbot-container" class="chatbot-container">
+        <button id="chatbot-toggle" class="chatbot-toggle" aria-label="Open support chat">
+            <i class="fas fa-robot"></i>
+            <span class="pulse-ring"></span>
+        </button>
+
+        <div id="chatbot-window" class="chatbot-window">
+            <div class="chatbot-header">
+                <div class="chatbot-header-info">
+                    <i class="fas fa-robot"></i>
+                    <div>
+                        <h4>Wetland Assistant</h4>
+                        <span>Online | AI Powered</span>
+                    </div>
+                </div>
+                <button id="chatbot-close" class="chatbot-close">&times;</button>
+            </div>
+
+            <div id="chatbot-messages" class="chatbot-messages">
+                <div class="message bot-message">
+                    Hello! I'm your WetlandGuard assistant. How can I help you today?
+                </div>
+            </div>
+
+            <div class="chatbot-input">
+                <input type="text" id="chatbot-input-field" placeholder="Ask about wetlands, reports, or status...">
+                <button id="chatbot-send"><i class="fas fa-paper-plane"></i></button>
+            </div>
+        </div>
+    </div>
+
+    <style>
+        .chatbot-container {
+            position: fixed;
+            bottom: 30px;
+            right: 30px;
+            z-index: 10000;
+        }
+
+        .chatbot-toggle {
+            width: 60px;
+            height: 60px;
+            border-radius: 50%;
+            background: linear-gradient(135deg, #10b981 0%, #059669 100%);
+            color: white;
+            border: none;
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.3);
+            cursor: pointer;
+            font-size: 24px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            position: relative;
+            transition: transform 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+        }
+
+        .chatbot-toggle:hover {
+            transform: scale(1.1);
+        }
+
+        .chatbot-toggle .pulse-ring {
+            position: absolute;
+            width: 100%;
+            height: 100%;
+            border-radius: 50%;
+            border: 4px solid #10b981;
+            animation: pulse-ring 2s infinite;
+        }
+
+        @keyframes pulse-ring {
+            0% {
+                transform: scale(0.8);
+                opacity: 0.8;
+            }
+
+            100% {
+                transform: scale(1.3);
+                opacity: 0;
+            }
+        }
+
+        .chatbot-window {
+            position: absolute;
+            bottom: 80px;
+            right: 0;
+            width: 350px;
+            height: 500px;
+            background: white;
+            border-radius: 20px;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2);
+            display: none;
+            flex-direction: column;
+            overflow: hidden;
+            animation: slideInUp 0.3s ease-out;
+        }
+
+        .chatbot-window.active {
+            display: flex;
+        }
+
+        .chatbot-header {
+            padding: 20px;
+            background: linear-gradient(135deg, #4a7c3b 0%, #7cb342 100%);
+            color: white;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .chatbot-header-info {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+        }
+
+        .chatbot-header-info h4 {
+            margin: 0;
+            font-size: 1.1rem;
+        }
+
+        .chatbot-header-info span {
+            font-size: 0.8rem;
+            opacity: 0.9;
+        }
+
+        .chatbot-close {
+            background: none;
+            border: none;
+            color: white;
+            font-size: 24px;
+            cursor: pointer;
+        }
+
+        .chatbot-messages {
+            flex: 1;
+            padding: 20px;
+            overflow-y: auto;
+            background: #f8faf6;
+            display: flex;
+            flex-direction: column;
+            gap: 12px;
+        }
+
+        .message {
+            max-width: 80%;
+            padding: 10px 15px;
+            border-radius: 15px;
+            font-size: 0.9rem;
+            line-height: 1.4;
+        }
+
+        .bot-message {
+            align-self: flex-start;
+            background: white;
+            color: #333;
+            border-bottom-left-radius: 2px;
+            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.05);
+        }
+
+        .user-message {
+            align-self: flex-end;
+            background: #10b981;
+            color: white;
+            border-bottom-right-radius: 2px;
+        }
+
+        .chatbot-input {
+            padding: 15px;
+            border-top: 1px solid #eee;
+            display: flex;
+            gap: 10px;
+        }
+
+        .chatbot-input input {
+            flex: 1;
+            padding: 10px;
+            border: 1px solid #ddd;
+            border-radius: 10px;
+            outline: none;
+        }
+
+        .chatbot-send {
+            background: #4a7c3b;
+            color: white;
+            border: none;
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .chatbot-send:hover {
+            background: #3d6b30;
+        }
+
+        .typing {
+            opacity: 0.7;
+        }
+
+        .typing i {
+            animation: pulse 1.5s infinite;
+            margin: 0 2px;
+        }
+
+        .typing i:nth-child(2) {
+            animation-delay: 0.3s;
+        }
+
+        .typing i:nth-child(3) {
+            animation-delay: 0.6s;
+        }
+
+        @keyframes pulse {
+            0%, 60%, 100% {
+                opacity: 0.3;
+            }
+            30% {
+                opacity: 1;
+            }
+        }
+    </style>
+</body>
+
+</html>

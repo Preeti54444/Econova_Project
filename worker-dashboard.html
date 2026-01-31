@@ -1,0 +1,287 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Worker Dashboard - WetlandGuard</title>
+    <link rel="stylesheet" href="css/style.css">
+    <link rel="stylesheet" href="css/animations.css">
+    <link rel="stylesheet" href="css/watermarks.css">
+    <link rel="stylesheet" href="css/worker-photos.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+</head>
+<body>
+    <!-- Navigation -->
+    <nav class="navbar">
+        <div class="nav-container">
+            <div class="logo">
+                <i class="fas fa-leaf"></i>
+                <span>WetlandGuard</span>
+            </div>
+            <ul class="nav-menu">
+                <li><a href="index.html" class="nav-link">Home</a></li>
+
+                <li><span class="nav-link" style="color: #4a7c3b;">Field Worker</span></li>
+                <li><a href="login.html" class="nav-link" onclick="logout()">Logout</a></li>
+            </ul>
+        </div>
+    </nav>
+
+    <!-- Worker Dashboard -->
+    <section class="dashboard worker-dashboard">
+        <div class="container">
+            <div class="dashboard-header">
+                <h2>Field Team Dashboard</h2>
+                <span class="badge worker-badge">
+                    <i class="fas fa-hammer"></i> FIELD WORKER
+                </span>
+                <div class="stats-row">
+                    <div class="stat-card">
+                        <div class="stat-number">12</div>
+                        <div class="stat-label">Assigned Tasks</div>
+                    </div>
+                    <div class="stat-card">
+                        <div class="stat-number">8</div>
+                        <div class="stat-label">Completed</div>
+                    </div>
+                    <div class="stat-card">
+                        <div class="stat-number">4</div>
+                        <div class="stat-label">In Progress</div>
+                    </div>
+                    <div class="stat-card">
+                        <div class="stat-number">24</div>
+                        <div class="stat-label">Photos Uploaded</div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Task Filters -->
+            <div class="dashboard-filters">
+                <button class="filter-btn active" data-filter="all">All Tasks</button>
+                <button class="filter-btn" data-filter="assigned">Assigned</button>
+                <button class="filter-btn" data-filter="in-progress">In Progress</button>
+                <button class="filter-btn" data-filter="completed">Completed</button>
+            </div>
+
+            <!-- Worker Tasks -->
+            <div class="worker-tasks">
+                <div class="task-card">
+                    <div class="task-header">
+                        <div class="task-info">
+                            <h3>Illegal Dumping Cleanup</h3>
+                            <p class="task-location"><i class="fas fa-map-marker-alt"></i> Lake Park, Sector 5</p>
+                        </div>
+                        <span class="status-badge status-action">In Progress</span>
+                    </div>
+                    <div class="task-body">
+                        <p>Clean up illegal waste dumping site and document the restoration process.</p>
+                        <div class="task-details">
+                            <span><i class="fas fa-calendar"></i> Assigned: Jan 26, 2026</span>
+                            <span><i class="fas fa-clock"></i> Due: Jan 30, 2026</span>
+                        </div>
+                    </div>
+                    <div class="task-actions">
+                        <button class="btn btn-primary btn-sm">Update Status</button>
+                        <button class="btn btn-secondary btn-sm">Upload Photos</button>
+                    </div>
+                </div>
+
+                <div class="task-card">
+                    <div class="task-header">
+                        <div class="task-info">
+                            <h3>Sewage Discharge Investigation</h3>
+                            <p class="task-location"><i class="fas fa-map-marker-alt"></i> River Side, Area 12</p>
+                        </div>
+                        <span class="status-badge status-reported">Assigned</span>
+                    </div>
+                    <div class="task-body">
+                        <p>Investigate reported sewage discharge and collect water samples for testing.</p>
+                        <div class="task-details">
+                            <span><i class="fas fa-calendar"></i> Assigned: Jan 28, 2026</span>
+                            <span><i class="fas fa-clock"></i> Due: Feb 2, 2026</span>
+                        </div>
+                    </div>
+                    <div class="task-actions">
+                        <button class="btn btn-primary btn-sm">Start Task</button>
+                        <button class="btn btn-secondary btn-sm">View Details</button>
+                    </div>
+                </div>
+
+                <div class="task-card">
+                    <div class="task-header">
+                        <div class="task-info">
+                            <h3>Construction Site Monitoring</h3>
+                            <p class="task-location"><i class="fas fa-map-marker-alt"></i> Wetland Reserve, Zone 3</p>
+                        </div>
+                        <span class="status-badge status-resolved">Completed</span>
+                    </div>
+                    <div class="task-body">
+                        <p>Monitor unauthorized construction activity near protected wetland area.</p>
+                        <div class="task-details">
+                            <span><i class="fas fa-calendar"></i> Completed: Jan 25, 2026</span>
+                            <span><i class="fas fa-check"></i> Status: Violation Stopped</span>
+                        </div>
+                    </div>
+                    <div class="task-actions">
+                        <button class="btn btn-secondary btn-sm">View Report</button>
+                        <button class="btn btn-secondary btn-sm">Photos (6)</button>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Photo Upload Section -->
+            <div class="photo-upload-section">
+                <h3>Upload Field Photos</h3>
+                <form id="fieldPhotoForm" enctype="multipart/form-data">
+                    <div class="form-group">
+                        <label for="reportSelect">Select Report:</label>
+                        <select id="reportSelect" name="reportId" required>
+                            <option value="">-- Select a report --</option>
+                        </select>
+                    </div>
+                    
+                    <div class="form-group">
+                        <label for="photoType">Photo Type:</label>
+                        <select id="photoType" name="photoType" required>
+                            <option value="before">Before (Initial State)</option>
+                            <option value="progress">Progress (Work in Progress)</option>
+                            <option value="after">After (Completed Work)</option>
+                        </select>
+                    </div>
+                    
+                    <div class="form-group">
+                        <label for="photoDescription">Description:</label>
+                        <textarea id="photoDescription" name="description" placeholder="Describe what this photo shows..."></textarea>
+                    </div>
+                    
+                    <div class="upload-area" onclick="document.getElementById('photoInput').click()">
+                        <i class="fas fa-camera"></i>
+                        <p>Click to select photo</p>
+                        <input type="file" id="photoInput" name="photo" accept="image/*" style="display: none;" required>
+                    </div>
+                    
+                    <button type="submit" class="btn btn-primary">Upload Photo</button>
+                </form>
+                
+                <div id="uploadStatus" style="display: none; margin-top: 10px;"></div>
+            </div>
+            
+            <!-- Recent Photos -->
+            <div class="recent-photos-section">
+                <h3>Recent Field Photos</h3>
+                <div id="recentPhotos" class="photo-gallery"></div>
+            </div>
+        </div>
+    </section>
+
+    <script>
+        const API_BASE = 'http://localhost:3004/api';
+        
+        function logout() {
+            localStorage.removeItem('userRole');
+            window.location.href = 'login.html';
+        }
+
+        // Filter functionality
+        document.querySelectorAll('.filter-btn').forEach(btn => {
+            btn.addEventListener('click', function() {
+                document.querySelectorAll('.filter-btn').forEach(b => b.classList.remove('active'));
+                this.classList.add('active');
+            });
+        });
+        
+        // Load reports for dropdown
+        async function loadReports() {
+            try {
+                const response = await fetch(`${API_BASE}/reports`);
+                const reports = await response.json();
+                const select = document.getElementById('reportSelect');
+                
+                reports.forEach(report => {
+                    const option = document.createElement('option');
+                    option.value = report.id;
+                    option.textContent = `#${report.id} - ${report.type} - ${report.location}`;
+                    select.appendChild(option);
+                });
+            } catch (error) {
+                console.error('Error loading reports:', error);
+            }
+        }
+        
+        // Handle photo upload
+        document.getElementById('fieldPhotoForm').addEventListener('submit', async function(e) {
+            e.preventDefault();
+            
+            const formData = new FormData(this);
+            formData.append('workerId', 'worker-001'); // In real app, get from session
+            
+            const statusDiv = document.getElementById('uploadStatus');
+            statusDiv.style.display = 'block';
+            statusDiv.innerHTML = '<i class="fas fa-spinner fa-spin"></i> Uploading photo...';
+            statusDiv.className = 'upload-status uploading';
+            
+            try {
+                const response = await fetch(`${API_BASE}/worker/upload-field-photo`, {
+                    method: 'POST',
+                    body: formData
+                });
+                
+                const result = await response.json();
+                
+                if (response.ok) {
+                    statusDiv.innerHTML = '<i class="fas fa-check"></i> Photo uploaded successfully!';
+                    statusDiv.className = 'upload-status success';
+                    this.reset();
+                    loadRecentPhotos();
+                } else {
+                    statusDiv.innerHTML = `<i class="fas fa-times"></i> Error: ${result.error}`;
+                    statusDiv.className = 'upload-status error';
+                }
+            } catch (error) {
+                statusDiv.innerHTML = '<i class="fas fa-times"></i> Upload failed. Please try again.';
+                statusDiv.className = 'upload-status error';
+            }
+            
+            setTimeout(() => {
+                statusDiv.style.display = 'none';
+            }, 3000);
+        });
+        
+        // Load recent photos
+        async function loadRecentPhotos() {
+            try {
+                // Get all field photos from all reports
+                const response = await fetch(`${API_BASE}/worker/all-field-photos`);
+                const photos = await response.json();
+                
+                const gallery = document.getElementById('recentPhotos');
+                
+                if (photos.length === 0) {
+                    gallery.innerHTML = '<p>No field photos uploaded yet.</p>';
+                    return;
+                }
+                
+                gallery.innerHTML = photos.map(photo => `
+                    <div class="photo-item">
+                        <img src="${API_BASE.replace('/api', '')}${photo.url}" alt="Field photo" onerror="this.src='data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iMjAwIiBoZWlnaHQ9IjE1MCIgdmlld0JveD0iMCAwIDIwMCAxNTAiIGZpbGw9Im5vbmUiIHhtbG5zPSJodHRwOi8vd3d3LnczLm9yZy8yMDAwL3N2ZyI+CjxyZWN0IHdpZHRoPSIyMDAiIGhlaWdodD0iMTUwIiBmaWxsPSIjZjVmNWY1Ii8+Cjx0ZXh0IHg9IjEwMCIgeT0iNzUiIHRleHQtYW5jaG9yPSJtaWRkbGUiIGZpbGw9IiM5OTkiPkltYWdlIG5vdCBmb3VuZDwvdGV4dD4KPC9zdmc+'">
+                        <div class="photo-info">
+                            <h4>Report #${photo.report_id} - ${photo.photo_type}</h4>
+                            <p>${photo.description || 'No description'}</p>
+                            <small>${new Date(photo.created_at).toLocaleDateString()}</small>
+                        </div>
+                    </div>
+                `).join('');
+            } catch (error) {
+                console.error('Error loading recent photos:', error);
+                document.getElementById('recentPhotos').innerHTML = '<p>Error loading photos.</p>';
+            }
+        }
+        
+        // Initialize
+        document.addEventListener('DOMContentLoaded', function() {
+            loadReports();
+            loadRecentPhotos();
+        });
+    </script>
+</body>
+</html>

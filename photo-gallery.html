@@ -1,0 +1,193 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Field Photos Gallery - WetlandGuard</title>
+    <link rel="stylesheet" href="css/style.css">
+    <link rel="stylesheet" href="css/worker-photos.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        .gallery-container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 20px;
+        }
+        .gallery-header {
+            text-align: center;
+            margin-bottom: 30px;
+        }
+        .photo-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+            gap: 20px;
+        }
+        .photo-card {
+            background: white;
+            border-radius: 12px;
+            overflow: hidden;
+            box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+            transition: transform 0.3s;
+        }
+        .photo-card:hover {
+            transform: translateY(-5px);
+        }
+        .photo-card img {
+            width: 100%;
+            height: 200px;
+            object-fit: cover;
+        }
+        .photo-details {
+            padding: 15px;
+        }
+        .photo-type {
+            display: inline-block;
+            padding: 4px 12px;
+            border-radius: 20px;
+            font-size: 12px;
+            font-weight: 600;
+            margin-bottom: 10px;
+        }
+        .photo-type.before { background: #ffeb3b; color: #333; }
+        .photo-type.progress { background: #2196f3; color: white; }
+        .photo-type.after { background: #4caf50; color: white; }
+        .report-link {
+            color: #4a7c3b;
+            text-decoration: none;
+            font-weight: 600;
+        }
+        .report-link:hover {
+            text-decoration: underline;
+        }
+        .no-photos {
+            text-align: center;
+            padding: 60px;
+            color: #666;
+        }
+        .filter-buttons {
+            text-align: center;
+            margin-bottom: 30px;
+        }
+        .filter-btn {
+            background: #f5f5f5;
+            border: none;
+            padding: 10px 20px;
+            margin: 0 5px;
+            border-radius: 25px;
+            cursor: pointer;
+            transition: all 0.3s;
+        }
+        .filter-btn.active {
+            background: #4a7c3b;
+            color: white;
+        }
+    </style>
+</head>
+<body>
+    <nav class="navbar">
+        <div class="nav-container">
+            <div class="logo">
+                <i class="fas fa-leaf"></i>
+                <span>WetlandGuard</span>
+            </div>
+            <ul class="nav-menu">
+                <li><a href="index.html" class="nav-link">Home</a></li>
+                <li><a href="admin-dashboard.html" class="nav-link">Dashboard</a></li>
+                <li><a href="photo-gallery.html" class="nav-link active">Photo Gallery</a></li>
+                <li><a href="login.html" class="nav-link">Logout</a></li>
+            </ul>
+        </div>
+    </nav>
+
+    <div class="gallery-container">
+        <div class="gallery-header">
+            <h1><i class="fas fa-camera"></i> Field Photos Gallery</h1>
+            <p>View all photos submitted by field workers</p>
+        </div>
+
+        <div class="filter-buttons">
+            <button class="filter-btn active" data-filter="all">All Photos</button>
+            <button class="filter-btn" data-filter="before">Before</button>
+            <button class="filter-btn" data-filter="progress">Progress</button>
+            <button class="filter-btn" data-filter="after">After</button>
+        </div>
+
+        <div id="photoGrid" class="photo-grid">
+            <div class="no-photos">
+                <i class="fas fa-spinner fa-spin"></i>
+                <p>Loading photos...</p>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        const API_BASE = 'http://localhost:3004/api';
+        let allPhotos = [];
+
+        async function loadPhotos() {
+            try {
+                const response = await fetch(`${API_BASE}/worker/all-field-photos`);
+                allPhotos = await response.json();
+                displayPhotos(allPhotos);
+            } catch (error) {
+                console.error('Error loading photos:', error);
+                document.getElementById('photoGrid').innerHTML = `
+                    <div class="no-photos">
+                        <i class="fas fa-exclamation-triangle"></i>
+                        <p>Error loading photos. Make sure the server is running.</p>
+                    </div>
+                `;
+            }
+        }
+
+        function displayPhotos(photos) {
+            const grid = document.getElementById('photoGrid');
+            
+            if (photos.length === 0) {
+                grid.innerHTML = `
+                    <div class="no-photos">
+                        <i class="fas fa-camera"></i>
+                        <p>No field photos uploaded yet.</p>
+                    </div>
+                `;
+                return;
+            }
+
+            grid.innerHTML = photos.map(photo => `
+                <div class="photo-card" data-type="${photo.photo_type}">
+                    <img src="${API_BASE.replace('/api', '')}${photo.url}" 
+                         alt="Field photo" 
+                         onerror="this.src='data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iMzAwIiBoZWlnaHQ9IjIwMCIgdmlld0JveD0iMCAwIDMwMCAyMDAiIGZpbGw9Im5vbmUiIHhtbG5zPSJodHRwOi8vd3d3LnczLm9yZy8yMDAwL3N2ZyI+CjxyZWN0IHdpZHRoPSIzMDAiIGhlaWdodD0iMjAwIiBmaWxsPSIjZjVmNWY1Ii8+Cjx0ZXh0IHg9IjE1MCIgeT0iMTAwIiB0ZXh0LWFuY2hvcj0ibWlkZGxlIiBmaWxsPSIjOTk5Ij5JbWFnZSBub3QgZm91bmQ8L3RleHQ+Cjwvc3ZnPg=='">
+                    <div class="photo-details">
+                        <span class="photo-type ${photo.photo_type}">${photo.photo_type.toUpperCase()}</span>
+                        <h3><a href="#" class="report-link">Report #${photo.report_id}</a></h3>
+                        <p>${photo.description || 'No description provided'}</p>
+                        <small><i class="fas fa-user"></i> ${photo.worker_id} • <i class="fas fa-calendar"></i> ${new Date(photo.created_at).toLocaleDateString()}</small>
+                    </div>
+                </div>
+            `).join('');
+        }
+
+        function filterPhotos(type) {
+            if (type === 'all') {
+                displayPhotos(allPhotos);
+            } else {
+                const filtered = allPhotos.filter(photo => photo.photo_type === type);
+                displayPhotos(filtered);
+            }
+        }
+
+        // Filter button functionality
+        document.querySelectorAll('.filter-btn').forEach(btn => {
+            btn.addEventListener('click', function() {
+                document.querySelectorAll('.filter-btn').forEach(b => b.classList.remove('active'));
+                this.classList.add('active');
+                filterPhotos(this.dataset.filter);
+            });
+        });
+
+        // Load photos on page load
+        document.addEventListener('DOMContentLoaded', loadPhotos);
+    </script>
+</body>
+</html>

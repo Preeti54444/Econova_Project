@@ -1,0 +1,235 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Admin Dashboard - WetlandGuard</title>
+    <link rel="stylesheet" href="css/style.css">
+    <link rel="stylesheet" href="css/animations.css">
+    <link rel="stylesheet" href="css/watermarks.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+</head>
+<body>
+    <!-- Navigation -->
+    <nav class="navbar">
+        <div class="nav-container">
+            <div class="logo">
+                <i class="fas fa-leaf"></i>
+                <span>WetlandGuard</span>
+            </div>
+            <ul class="nav-menu">
+                <li><a href="index.html" class="nav-link">Home</a></li>
+                <li><a href="photo-gallery.html" class="nav-link">Field Photos</a></li>
+                <li><span class="nav-link" style="color: #e74c3c;">Admin Panel</span></li>
+                <li><a href="login.html" class="nav-link" onclick="logout()">Logout</a></li>
+            </ul>
+        </div>
+    </nav>
+
+    <!-- Admin Dashboard -->
+    <section class="dashboard authority-dashboard">
+        <div class="container">
+            <div class="dashboard-header authority-header">
+                <div class="header-left">
+                    <h2>Authority Control Center</h2>
+                    <span class="badge admin-badge">
+                        <i class="fas fa-shield-alt"></i> ADMIN ACCESS
+                    </span>
+                </div>
+                <div class="header-right">
+                    <button class="btn btn-secondary btn-sm" onclick="exportReports()">
+                        <i class="fas fa-download"></i> Export Reports
+                    </button>
+                </div>
+            </div>
+
+            <!-- Analytics Dashboard -->
+            <div class="analytics-section">
+                <div class="analytics-grid">
+                    <div class="analytics-card primary">
+                        <div class="analytics-content">
+                            <div class="analytics-number" id="totalReports">247</div>
+                            <div class="analytics-label">Total Reports</div>
+                            <div class="analytics-trend">
+                                <i class="fas fa-arrow-up"></i> This Month
+                            </div>
+                        </div>
+                        <div class="analytics-icon">
+                            <i class="fas fa-file-alt"></i>
+                        </div>
+                    </div>
+
+                    <div class="analytics-card warning">
+                        <div class="analytics-content">
+                            <div class="analytics-number" id="pendingReports">23</div>
+                            <div class="analytics-label">Pending Review</div>
+                            <div class="analytics-trend">Needs Attention</div>
+                        </div>
+                        <div class="analytics-icon">
+                            <i class="fas fa-hourglass-half"></i>
+                        </div>
+                    </div>
+
+                    <div class="analytics-card info">
+                        <div class="analytics-content">
+                            <div class="analytics-number" id="inProgressReports">45</div>
+                            <div class="analytics-label">In Progress</div>
+                            <div class="analytics-trend">Action Underway</div>
+                        </div>
+                        <div class="analytics-icon">
+                            <i class="fas fa-spinner"></i>
+                        </div>
+                    </div>
+
+                    <div class="analytics-card success">
+                        <div class="analytics-content">
+                            <div class="analytics-number" id="resolvedReports">179</div>
+                            <div class="analytics-label">Resolved</div>
+                            <div class="analytics-trend">Completed</div>
+                        </div>
+                        <div class="analytics-icon">
+                            <i class="fas fa-check-circle"></i>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Category Breakdown -->
+                <div class="category-stats">
+                    <h3>Violations by Category</h3>
+                    <div class="category-grid">
+                        <div class="category-stat dumping">
+                            <i class="fas fa-trash"></i>
+                            <span class="category-name">Illegal Dumping</span>
+                            <span class="category-count">89</span>
+                        </div>
+                        <div class="category-stat sewage">
+                            <i class="fas fa-water"></i>
+                            <span class="category-name">Sewage Discharge</span>
+                            <span class="category-count">76</span>
+                        </div>
+                        <div class="category-stat construction">
+                            <i class="fas fa-hard-hat"></i>
+                            <span class="category-name">Illegal Construction</span>
+                            <span class="category-count">82</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Reports Management -->
+            <div class="authority-controls">
+                <div class="controls-header">
+                    <h3>Manage Reports</h3>
+                </div>
+
+                <div class="controls-grid">
+                    <div class="control-group">
+                        <label class="control-label">
+                            <i class="fas fa-filter"></i> Status
+                        </label>
+                        <select class="filter-select">
+                            <option value="all">All Status</option>
+                            <option value="reported">Reported</option>
+                            <option value="review">Under Review</option>
+                            <option value="action">Action Taken</option>
+                            <option value="resolved">Resolved</option>
+                        </select>
+                    </div>
+
+                    <div class="control-group">
+                        <label class="control-label">
+                            <i class="fas fa-list"></i> Type
+                        </label>
+                        <select class="filter-select">
+                            <option value="all">All Types</option>
+                            <option value="dumping">Illegal Dumping</option>
+                            <option value="sewage">Sewage Discharge</option>
+                            <option value="construction">Illegal Construction</option>
+                        </select>
+                    </div>
+
+                    <div class="control-group search-group">
+                        <label class="control-label">
+                            <i class="fas fa-search"></i> Search
+                        </label>
+                        <input type="text" class="filter-select" placeholder="Search reports...">
+                    </div>
+                </div>
+            </div>
+
+            <!-- Reports Table -->
+            <div class="table-wrapper authority-table-wrapper">
+                <div class="table-header">
+                    <h3>Recent Reports</h3>
+                    <span class="table-count">247 reports</span>
+                </div>
+                <table class="reports-table authority-reports-table">
+                    <thead>
+                        <tr>
+                            <th>ID</th>
+                            <th>Type</th>
+                            <th>Location</th>
+                            <th>Reporter</th>
+                            <th>Date</th>
+                            <th>Status</th>
+                            <th>Actions</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td>#WG001</td>
+                            <td><span class="category-stat dumping">Illegal Dumping</span></td>
+                            <td>Lake Park, Sector 5</td>
+                            <td>John Doe</td>
+                            <td>2026-01-28</td>
+                            <td><span class="status-badge status-review">Under Review</span></td>
+                            <td>
+                                <button class="table-action-btn">Update</button>
+                                <button class="table-action-btn secondary">View</button>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>#WG002</td>
+                            <td><span class="category-stat sewage">Sewage Discharge</span></td>
+                            <td>River Side, Area 12</td>
+                            <td>Jane Smith</td>
+                            <td>2026-01-27</td>
+                            <td><span class="status-badge status-action">Action Taken</span></td>
+                            <td>
+                                <button class="table-action-btn">Update</button>
+                                <button class="table-action-btn secondary">View</button>
+                            </td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </section>
+
+    <script>
+        const API_BASE = 'http://localhost:3004/api';
+        
+        function logout() {
+            localStorage.removeItem('userRole');
+            window.location.href = 'login.html';
+        }
+        
+        function exportReports() {
+            const exportBtn = document.querySelector('.btn-secondary');
+            const originalText = exportBtn.innerHTML;
+            
+            exportBtn.innerHTML = '<i class="fas fa-spinner fa-spin"></i> Exporting...';
+            exportBtn.disabled = true;
+            
+            // Direct window.open approach
+            window.open(`${API_BASE}/export/reports`, '_blank');
+            
+            // Reset button after 2 seconds
+            setTimeout(() => {
+                exportBtn.innerHTML = originalText;
+                exportBtn.disabled = false;
+            }, 2000);
+        }
+    </script>
+</body>
+</html>

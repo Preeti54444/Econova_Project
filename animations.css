@@ -1,0 +1,577 @@
+/* ========================================
+   ENHANCED ECOSYSTEM ANIMATIONS & EFFECTS
+   ======================================== */
+
+/* ========== ECOSYSTEM-THEMED ANIMATIONS ========== */
+@keyframes glowPulse {
+    0%, 100% {
+        box-shadow: 0 0 10px rgba(124, 179, 66, 0.5), 0 0 20px rgba(74, 124, 59, 0.3);
+    }
+    50% {
+        box-shadow: 0 0 20px rgba(124, 179, 66, 0.8), 0 0 40px rgba(74, 124, 59, 0.5);
+    }
+}
+
+@keyframes shimmer {
+    0% {
+        background-position: -1000px 0;
+    }
+    100% {
+        background-position: 1000px 0;
+    }
+}
+
+@keyframes slideDownFade {
+    from {
+        opacity: 0;
+        transform: translateY(-20px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+@keyframes rotateIn {
+    from {
+        opacity: 0;
+        transform: rotate(-10deg) scale(0.9);
+    }
+    to {
+        opacity: 1;
+        transform: rotate(0) scale(1);
+    }
+}
+
+@keyframes wave {
+    0%, 100% {
+        transform: translateY(0px);
+    }
+    25% {
+        transform: translateY(-5px);
+    }
+    75% {
+        transform: translateY(5px);
+    }
+}
+
+@keyframes heartbeat {
+    0%, 100% {
+        transform: scale(1);
+    }
+    14% {
+        transform: scale(1.15);
+    }
+    28% {
+        transform: scale(1);
+    }
+}
+
+@keyframes fadeInScale {
+    from {
+        opacity: 0;
+        transform: scale(0.95);
+    }
+    to {
+        opacity: 1;
+        transform: scale(1);
+    }
+}
+
+@keyframes gradientShift {
+    0% {
+        background-position: 0% 50%;
+    }
+    50% {
+        background-position: 100% 50%;
+    }
+    100% {
+        background-position: 0% 50%;
+    }
+}
+
+@keyframes floatUp {
+    from {
+        opacity: 0;
+        transform: translateY(30px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+@keyframes popIn {
+    0% {
+        opacity: 0;
+        transform: scale(0.5) rotate(0deg);
+    }
+    50% {
+        transform: scale(1.1) rotate(5deg);
+    }
+    100% {
+        opacity: 1;
+        transform: scale(1) rotate(0deg);
+    }
+}
+
+@keyframes rainbowGlow {
+    0% {
+        box-shadow: 0 0 5px rgba(124, 179, 66, 0.3);
+    }
+    50% {
+        box-shadow: 0 0 20px rgba(74, 124, 59, 0.6);
+    }
+    100% {
+        box-shadow: 0 0 5px rgba(124, 179, 66, 0.3);
+    }
+}
+
+@keyframes slideInUp {
+    from {
+        opacity: 0;
+        transform: translateY(50px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+@keyframes scaleIn {
+    from {
+        opacity: 0;
+        transform: scale(0.9);
+    }
+    to {
+        opacity: 1;
+        transform: scale(1);
+    }
+}
+
+@keyframes blinkGlow {
+    0%, 100% {
+        opacity: 1;
+    }
+    50% {
+        opacity: 0.7;
+    }
+}
+
+@keyframes rotateSlow {
+    from {
+        transform: rotate(0deg);
+    }
+    to {
+        transform: rotate(360deg);
+    }
+}
+
+@keyframes wobble {
+    0%, 100% {
+        transform: translateX(0);
+    }
+    15% {
+        transform: translateX(-5px) rotate(-2deg);
+    }
+    30% {
+        transform: translateX(5px) rotate(2deg);
+    }
+    45% {
+        transform: translateX(-5px) rotate(-2deg);
+    }
+    60% {
+        transform: translateX(3px) rotate(1deg);
+    }
+    75% {
+        transform: translateX(-2px) rotate(-1deg);
+    }
+}
+
+@keyframes expand {
+    from {
+        opacity: 0;
+        transform: scale(0.8);
+        transform-origin: center;
+    }
+    to {
+        opacity: 1;
+        transform: scale(1);
+        transform-origin: center;
+    }
+}
+
+/* ========== ENHANCED HERO SECTION ========== */
+.hero {
+    animation: fadeIn 0.8s ease-out;
+}
+
+.hero::before {
+    animation: gradientShift 8s ease-in-out infinite;
+}
+
+.hero-text {
+    animation: fadeInLeft 0.8s ease-out;
+}
+
+.hero-title {
+    background-size: 200% auto;
+    animation: fadeInLeft 0.8s ease-out, gradientShift 4s ease-in-out infinite;
+}
+
+.hero-subtitle {
+    animation: fadeInLeft 0.8s ease-out 0.1s both;
+}
+
+.hero-cta {
+    animation: fadeInLeft 0.8s ease-out 0.2s both;
+}
+
+.hero-visual {
+    animation: fadeInRight 0.8s ease-out;
+}
+
+.scroll-indicator {
+    animation: bounce 2s infinite, wave 2s infinite;
+}
+
+/* ========== ENHANCED INFO CARDS ========== */
+.info-card {
+    animation: slideDownFade 0.6s ease-out backwards;
+    position: relative;
+    overflow: hidden;
+}
+
+.info-card:nth-child(1) { animation-delay: 0.1s; }
+.info-card:nth-child(2) { animation-delay: 0.2s; }
+.info-card:nth-child(3) { animation-delay: 0.3s; }
+.info-card:nth-child(4) { animation-delay: 0.4s; }
+
+.info-card::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: -100%;
+    width: 100%;
+    height: 100%;
+    background: linear-gradient(90deg, transparent, rgba(124, 179, 66, 0.2), transparent);
+    transition: left 0.8s ease;
+}
+
+.info-card:hover::before {
+    left: 100%;
+}
+
+.info-card:hover {
+    animation: glowPulse 2s ease-in-out infinite;
+}
+
+.icon-box {
+    animation: popIn 0.6s cubic-bezier(0.34, 1.56, 0.64, 1);
+    box-shadow: 0 8px 16px rgba(74, 124, 59, 0.2);
+    transition: all 0.3s ease;
+}
+
+.info-card:hover .icon-box {
+    animation: glowPulse 1.5s ease-in-out infinite, rotateSlow 4s linear infinite;
+}
+
+/* ========== ENHANCED BUTTONS ========== */
+.btn-primary {
+    background-size: 200% 200%;
+    position: relative;
+    overflow: hidden;
+    animation: fadeInScale 0.6s ease-out;
+}
+
+.btn-primary::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: -100%;
+    width: 100%;
+    height: 100%;
+    background: rgba(255, 255, 255, 0.3);
+    transition: left 0.5s ease;
+}
+
+.btn-primary:hover::before {
+    left: 100%;
+}
+
+.btn-primary:hover {
+    box-shadow: 0 12px 32px rgba(74, 124, 59, 0.4);
+    transform: translateY(-4px);
+}
+
+.btn-primary:active {
+    transform: translateY(-2px);
+}
+
+.btn-secondary {
+    position: relative;
+    overflow: hidden;
+    animation: fadeInScale 0.6s ease-out 0.1s both;
+}
+
+.btn-secondary::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: -100%;
+    width: 100%;
+    height: 100%;
+    background: rgba(255, 255, 255, 0.3);
+    transition: left 0.5s ease;
+}
+
+.btn-secondary:hover::before {
+    left: 100%;
+}
+
+.btn-secondary:hover {
+    box-shadow: 0 12px 32px rgba(2, 119, 189, 0.4);
+    transform: translateY(-4px);
+}
+
+/* ========== ENHANCED FORM ELEMENTS ========== */
+.form-section {
+    animation: slideInUp 0.5s ease-out backwards;
+}
+
+.form-section:nth-child(1) { animation-delay: 0.1s; }
+.form-section:nth-child(2) { animation-delay: 0.2s; }
+.form-section:nth-child(3) { animation-delay: 0.3s; }
+.form-section:nth-child(4) { animation-delay: 0.4s; }
+.form-section:nth-child(5) { animation-delay: 0.5s; }
+
+.enhanced-btn {
+    position: relative;
+    overflow: hidden;
+    animation: scaleIn 0.4s ease-out backwards;
+}
+
+.enhanced-btn::before {
+    content: '';
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    width: 0;
+    height: 0;
+    background: rgba(124, 179, 66, 0.3);
+    border-radius: 50%;
+    transform: translate(-50%, -50%);
+    transition: width 0.6s ease, height 0.6s ease;
+}
+
+.enhanced-btn:active::before {
+    width: 400px;
+    height: 400px;
+}
+
+.enhanced-btn i {
+    transition: transform 0.3s ease;
+}
+
+.enhanced-btn:hover i {
+    transform: scale(1.2) rotate(10deg);
+}
+
+/* ========== ENHANCED PROGRESS & STATUS ========== */
+.progress-step {
+    animation: slideInUp 0.5s ease-out backwards;
+}
+
+.progress-step:nth-child(1) { animation-delay: 0.1s; }
+.progress-step:nth-child(3) { animation-delay: 0.2s; }
+.progress-step:nth-child(5) { animation-delay: 0.3s; }
+
+.step-number {
+    transition: all 0.3s cubic-bezier(0.34, 1.56, 0.64, 1);
+}
+
+.progress-step.active .step-number {
+    animation: heartbeat 0.6s ease-out;
+}
+
+.status-badge {
+    animation: slideInUp 0.4s ease-out backwards;
+}
+
+/* ========== ENHANCED DASHBOARD CARDS ========== */
+.stat-card {
+    animation: slideInUp 0.5s ease-out backwards;
+    transition: all 0.3s cubic-bezier(0.34, 1.56, 0.64, 1);
+}
+
+.stat-card:nth-child(1) { animation-delay: 0.1s; }
+.stat-card:nth-child(2) { animation-delay: 0.2s; }
+.stat-card:nth-child(3) { animation-delay: 0.3s; }
+.stat-card:nth-child(4) { animation-delay: 0.4s; }
+
+.stat-card:hover {
+    animation: glowPulse 1.5s ease-in-out infinite;
+}
+
+.report-card {
+    animation: slideInUp 0.5s ease-out backwards;
+}
+
+.report-card:hover {
+    animation: rainbowGlow 2s ease-in-out infinite;
+}
+
+.analytics-card {
+    animation: slideInUp 0.5s ease-out backwards;
+}
+
+.analytics-card:hover {
+    animation: glowPulse 1.5s ease-in-out infinite;
+}
+
+/* ========== ENHANCED MODALS ========== */
+.modal.show {
+    animation: fadeIn 0.3s ease-out;
+}
+
+.modal-content {
+    animation: slideUp 0.4s cubic-bezier(0.34, 1.56, 0.64, 1);
+}
+
+.success-message.show {
+    animation: fadeIn 0.3s ease-out;
+}
+
+.success-content {
+    animation: slideUp 0.4s cubic-bezier(0.34, 1.56, 0.64, 1);
+}
+
+.success-icon {
+    animation: popIn 0.6s cubic-bezier(0.34, 1.56, 0.64, 1);
+}
+
+/* ========== ENHANCED CHATBOT ========== */
+.chatbot-widget.open {
+    animation: slideInUp 0.4s ease-out;
+}
+
+.chat-bubble {
+    animation: slideInUp 0.3s ease-out;
+}
+
+.chatbot-toggle-btn {
+    animation: heartbeat 1s ease-in-out infinite;
+    transition: all 0.3s ease;
+}
+
+.chatbot-toggle-btn:hover {
+    animation: none;
+    transform: scale(1.15);
+}
+
+.suggestion-chip {
+    animation: slideInUp 0.4s ease-out backwards;
+    transition: all 0.3s cubic-bezier(0.34, 1.56, 0.64, 1);
+}
+
+.suggestion-chip:hover {
+    animation: wobble 0.5s ease-in-out;
+    transform: translateY(-2px);
+}
+
+/* ========== ENHANCED MAP & LEGENDS ========== */
+.map-legend {
+    animation: slideInUp 0.5s ease-out backwards;
+    transition: all 0.3s ease;
+}
+
+.map-legend:hover {
+    box-shadow: 0 8px 24px rgba(0, 0, 0, 0.15);
+}
+
+.legend-item {
+    animation: slideInUp 0.4s ease-out backwards;
+}
+
+.legend-item:nth-child(1) { animation-delay: 0.1s; }
+.legend-item:nth-child(2) { animation-delay: 0.2s; }
+.legend-item:nth-child(3) { animation-delay: 0.3s; }
+
+/* ========== ENHANCED LOADING STATES ========== */
+@keyframes spinnerRotate {
+    from {
+        transform: rotate(0deg);
+    }
+    to {
+        transform: rotate(360deg);
+    }
+}
+
+.spinner {
+    animation: spinnerRotate 1.2s linear infinite;
+}
+
+.loading-dot {
+    animation: blinkGlow 1.4s ease-in-out infinite;
+}
+
+/* ========== ECOSYSTEM NATURE ELEMENTS ========== */
+.wetland-graphic {
+    animation: float 3s ease-in-out infinite;
+}
+
+.water {
+    animation: wave 3s ease-in-out infinite;
+}
+
+.plant {
+    animation: sway 4s ease-in-out infinite;
+}
+
+.plant:nth-child(2) {
+    animation-delay: 0.3s;
+}
+
+.plant:nth-child(3) {
+    animation-delay: 0.6s;
+}
+
+.fish {
+    animation: swim 6s ease-in-out infinite;
+}
+
+/* ========== ADVANCED HOVER EFFECTS ========== */
+.nav-link::after {
+    animation: slideInUp 0.3s ease-out backwards;
+}
+
+.filter-btn:hover {
+    animation: glowPulse 1s ease-in-out;
+}
+
+.filter-btn.active {
+    animation: glowPulse 1.5s ease-in-out infinite;
+}
+
+/* ========== RESPONSIVE ANIMATIONS ========== */
+@media (max-width: 768px) {
+    .hero-title {
+        font-size: 2rem;
+    }
+    
+    .info-card:nth-child(3) { animation-delay: 0.1s; }
+    .info-card:nth-child(4) { animation-delay: 0.2s; }
+
+    .stat-card:nth-child(3) { animation-delay: 0.1s; }
+    .stat-card:nth-child(4) { animation-delay: 0.2s; }
+}
+
+@media (max-width: 480px) {
+    .hero-title {
+        font-size: 1.5rem;
+    }
+
+    .info-card:nth-child(2) { animation-delay: 0.1s; }
+    .info-card:nth-child(3) { animation-delay: 0s; }
+    .info-card:nth-child(4) { animation-delay: 0s; }
+}

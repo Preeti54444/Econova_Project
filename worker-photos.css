@@ -1,0 +1,147 @@
+/* Worker Photo Upload Styles */
+.photo-upload-section {
+    background: white;
+    padding: 30px;
+    border-radius: 12px;
+    box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+    margin: 30px 0;
+}
+
+.photo-upload-section h3 {
+    color: #4a7c3b;
+    margin-bottom: 20px;
+    font-size: 1.5rem;
+}
+
+.form-group {
+    margin-bottom: 20px;
+}
+
+.form-group label {
+    display: block;
+    margin-bottom: 8px;
+    font-weight: 600;
+    color: #333;
+}
+
+.form-group select,
+.form-group textarea {
+    width: 100%;
+    padding: 12px;
+    border: 2px solid #e0e0e0;
+    border-radius: 8px;
+    font-size: 14px;
+    transition: border-color 0.3s;
+}
+
+.form-group select:focus,
+.form-group textarea:focus {
+    outline: none;
+    border-color: #4a7c3b;
+}
+
+.form-group textarea {
+    height: 80px;
+    resize: vertical;
+}
+
+.upload-area {
+    border: 2px dashed #4a7c3b;
+    border-radius: 12px;
+    padding: 40px;
+    text-align: center;
+    cursor: pointer;
+    transition: all 0.3s;
+    background: #f8faf6;
+    margin: 20px 0;
+}
+
+.upload-area:hover {
+    border-color: #2d5a21;
+    background: #f0f7ed;
+}
+
+.upload-area i {
+    font-size: 3rem;
+    color: #4a7c3b;
+    margin-bottom: 15px;
+}
+
+.upload-area p {
+    color: #666;
+    font-size: 16px;
+    margin: 0;
+}
+
+.upload-status {
+    padding: 12px;
+    border-radius: 8px;
+    font-weight: 600;
+}
+
+.upload-status.uploading {
+    background: #e3f2fd;
+    color: #1976d2;
+    border: 1px solid #bbdefb;
+}
+
+.upload-status.success {
+    background: #e8f5e8;
+    color: #2e7d32;
+    border: 1px solid #c8e6c9;
+}
+
+.upload-status.error {
+    background: #ffebee;
+    color: #c62828;
+    border: 1px solid #ffcdd2;
+}
+
+.recent-photos-section {
+    background: white;
+    padding: 30px;
+    border-radius: 12px;
+    box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+    margin: 30px 0;
+}
+
+.recent-photos-section h3 {
+    color: #4a7c3b;
+    margin-bottom: 20px;
+    font-size: 1.5rem;
+}
+
+.photo-gallery {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+    gap: 20px;
+}
+
+.photo-item {
+    border-radius: 8px;
+    overflow: hidden;
+    box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+}
+
+.photo-item img {
+    width: 100%;
+    height: 150px;
+    object-fit: cover;
+}
+
+.photo-info {
+    padding: 12px;
+    background: white;
+}
+
+.photo-info h4 {
+    margin: 0 0 5px 0;
+    font-size: 14px;
+    color: #333;
+}
+
+.photo-info p {
+    margin: 0;
+    font-size: 12px;
+    color: #666;
+}

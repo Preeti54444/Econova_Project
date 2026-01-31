@@ -1,0 +1,36 @@
+🔧 HOW TO FIX THE "Failed to fetch" ERROR
+==========================================
+
+The error occurs because the frontend is trying to connect to a backend server that isn't running.
+
+QUICK FIX - Option 1 (Recommended):
+-----------------------------------
+1. Double-click the "start-server.bat" file in the main project folder
+2. Wait for the server to start (you'll see "Server running on port 3000")
+3. Refresh your webpage - the error should be gone!
+
+MANUAL FIX - Option 2:
+----------------------
+1. Open Command Prompt (cmd)
+2. Navigate to your project folder:
+   cd "c:\Users\Sneha\Downloads\Hackathon_Project-main (4)\Hackathon_Project-main\server"
+3. Install dependencies (first time only):
+   npm install
+4. Start the server:
+   npm start
+5. Keep this window open while using the app
+
+WHAT'S HAPPENING:
+-----------------
+- Your frontend (HTML/JS) needs to communicate with a backend server
+- The backend server handles data storage and API requests
+- Without the server running, you get "Failed to fetch" errors
+- The app now has offline mode as backup, but full features need the server
+
+TROUBLESHOOTING:
+----------------
+- If port 3000 is busy, the server will show an error
+- Close any other applications using port 3000
+- Or change the port in server/server.js (line: const PORT = process.env.PORT || 3000)
+
+✅ Once the server is running, your app will work perfectly!

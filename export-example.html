@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Export Report Example</title>
+    <style>
+        .export-buttons {
+            margin: 20px;
+            text-align: center;
+        }
+        .export-btn {
+            background: #10b981;
+            color: white;
+            border: none;
+            padding: 10px 20px;
+            margin: 5px;
+            border-radius: 5px;
+            cursor: pointer;
+        }
+        .export-btn:hover {
+            background: #059669;
+        }
+    </style>
+</head>
+<body>
+    <div class="export-buttons">
+        <h2>Export Report</h2>
+        <button class="export-btn" onclick="handleExportClick(event, 'pdf')">
+            📄 Export as PDF
+        </button>
+        <button class="export-btn" onclick="handleExportClick(event, 'csv')">
+            📊 Export as CSV
+        </button>
+        <button class="export-btn" onclick="handleExportClick(event, 'json')">
+            📋 Export as JSON
+        </button>
+    </div>
+
+    <script src="js/export-report.js"></script>
+</body>
+</html>

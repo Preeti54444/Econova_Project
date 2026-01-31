@@ -1,0 +1,184 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="WetlandGuard - Login to report and track wetland violations">
+    <meta name="theme-color" content="#10b981">
+    <title>WetlandGuard - Login</title>
+
+    <!-- Stylesheets -->
+    <link rel="stylesheet" href="css/style.css">
+    <link rel="stylesheet" href="css/animations.css">
+    <link rel="stylesheet" href="css/watermarks.css">
+    <link rel="stylesheet" href="css/login.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+</head>
+
+<body>
+    <!-- Floating Leaves Background -->
+    <div class="floating-leaves">
+        <div class="floating-leaf">🌿</div>
+        <div class="floating-leaf">🍃</div>
+        <div class="floating-leaf">🌿</div>
+        <div class="floating-leaf">🍃</div>
+        <div class="floating-leaf">🌿</div>
+        <div class="floating-leaf">🍃</div>
+    </div>
+
+    <!-- Login Container -->
+    <div class="login-wrapper">
+        <!-- Watermarks -->
+        <div class="leaf-watermark top-left">🌿</div>
+        <div class="leaf-watermark bottom-right">🍃</div>
+        <div class="watermark section-watermark green" style="top: 10%; right: 5%; opacity: 0.08;">
+            <i class="fas fa-leaf"></i>
+        </div>
+
+        <div class="login-container">
+            <!-- Logo Section -->
+            <div class="login-logo">
+                <i class="fas fa-leaf"></i>
+                <h1>WetlandGuard</h1>
+                <p>Protect. Report. Track.</p>
+            </div>
+
+            <!-- Login Form -->
+            <form class="login-form" id="loginForm">
+                <div class="form-group">
+                    <label for="role">
+                        <i class="fas fa-user-tag"></i>
+                        Login As
+                    </label>
+                    <select id="role" name="role" required>
+                        <option value="">-- Select your role --</option>
+                        <option value="user">👤 User (Citizen)</option>
+                        <option value="worker">🔧 Worker (Field Team)</option>
+                        <option value="admin">👨‍💼 Admin (Authority)</option>
+                    </select>
+                    <span class="form-error" id="roleError"></span>
+                </div>
+
+                <div class="form-group">
+                    <label for="email">
+                        <i class="fas fa-envelope"></i>
+                        Email or Username
+                    </label>
+                    <input type="text" id="email" name="email" placeholder="Enter your email or username" required>
+                    <span class="form-error" id="emailError"></span>
+                </div>
+
+                <div class="form-group">
+                    <label for="password">
+                        <i class="fas fa-lock"></i>
+                        Password
+                    </label>
+                    <div class="password-input-group">
+                        <input type="password" id="password" name="password" placeholder="Enter your password" required>
+                        <button type="button" class="toggle-password" onclick="togglePassword()">
+                            <i class="fas fa-eye"></i>
+                        </button>
+                    </div>
+                    <span class="form-error" id="passwordError"></span>
+                </div>
+
+                <div class="form-options">
+                    <label class="remember-me">
+                        <input type="checkbox" id="rememberMe" name="rememberMe">
+                        <span>Remember me</span>
+                    </label>
+                    <a href="#" class="forgot-password">Forgot password?</a>
+                </div>
+
+                <button type="submit" class="btn-login">
+                    <i class="fas fa-sign-in-alt"></i>
+                    Sign In
+                </button>
+
+                <!-- Error Message -->
+                <div class="login-error" id="loginError" style="display: none;">
+                    <i class="fas fa-exclamation-circle"></i>
+                    <span id="errorMessage"></span>
+                </div>
+
+                <!-- Success Message -->
+                <div class="login-success" id="loginSuccess" style="display: none;">
+                    <i class="fas fa-check-circle"></i>
+                    <span>Login successful! Redirecting...</span>
+                </div>
+            </form>
+
+            <!-- Sign Up Link -->
+            <div class="login-footer">
+                <p>Don't have an account? <a href="#signup" class="signup-link">Sign up here</a></p>
+                <div class="social-login">
+                    <p>Or continue with</p>
+                    <div class="social-buttons">
+                        <button type="button" class="social-btn google" title="Login with Google">
+                            <i class="fab fa-google"></i>
+                        </button>
+                        <button type="button" class="social-btn github" title="Login with GitHub">
+                            <i class="fab fa-github"></i>
+                        </button>
+                        <button type="button" class="social-btn microsoft" title="Login with Microsoft">
+                            <i class="fab fa-microsoft"></i>
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Info Panel -->
+        <div class="login-info-panel">
+            <div class="info-content">
+                <h2>Join the Movement</h2>
+                <p>Help protect our wetlands by reporting violations and tracking environmental action in real-time.</p>
+                
+                <div class="info-features">
+                    <div class="info-feature">
+                        <i class="fas fa-map-marker-alt"></i>
+                        <h3>Real-Time Reporting</h3>
+                        <p>Report violations instantly with location and photos</p>
+                    </div>
+                    <div class="info-feature">
+                        <i class="fas fa-chart-line"></i>
+                        <h3>Track Progress</h3>
+                        <p>Monitor action status from report to resolution</p>
+                    </div>
+                    <div class="info-feature">
+                        <i class="fas fa-globe"></i>
+                        <h3>Community Impact</h3>
+                        <p>See how your reports help protect ecosystems</p>
+                    </div>
+                </div>
+
+                <div class="info-stats">
+                    <div class="stat">
+                        <span class="stat-number">2,450+</span>
+                        <span class="stat-label">Reports Filed</span>
+                    </div>
+                    <div class="stat">
+                        <span class="stat-number">1,850+</span>
+                        <span class="stat-label">Actions Taken</span>
+                    </div>
+                    <div class="stat">
+                        <span class="stat-number">8,900+</span>
+                        <span class="stat-label">Community Members</span>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Info Watermarks -->
+            <div class="watermark section-watermark blue" style="bottom: 10%; left: 5%; opacity: 0.08;">
+                <i class="fas fa-water"></i>
+            </div>
+            <div class="eco-circle-watermark" style="top: 10%; left: 10%;"></div>
+        </div>
+    </div>
+
+    <!-- Scripts -->
+    <script src="js/login.js" defer></script>
+</body>
+
+</html>

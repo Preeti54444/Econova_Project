@@ -1,0 +1,537 @@
+/* ========== ECOSYSTEM WATERMARK STYLES ========== */
+
+/* Watermark Container */
+.watermark {
+    position: absolute;
+    opacity: 0.08;
+    pointer-events: none;
+    z-index: 0;
+}
+
+.watermark.hero-watermark {
+    top: 10%;
+    right: 5%;
+    font-size: 15rem;
+    color: var(--forest-green);
+    animation: float 6s ease-in-out infinite;
+}
+
+.watermark.section-watermark {
+    opacity: 0.06;
+    font-size: 12rem;
+    color: var(--primary-green);
+}
+
+.watermark.footer-watermark {
+    opacity: 0.15;
+    font-size: 8rem;
+    color: rgba(255, 255, 255, 0.3);
+}
+
+/* Animated Watermarks */
+.watermark-icon {
+    display: inline-block;
+    animation: float 8s ease-in-out infinite;
+}
+
+.watermark-icon.slow {
+    animation: float 12s ease-in-out infinite;
+}
+
+.watermark-icon.fast {
+    animation: float 4s ease-in-out infinite;
+}
+
+.watermark-icon.sway {
+    animation: sway 6s ease-in-out infinite;
+}
+
+.watermark-icon.spin {
+    animation: rotateSlow 20s linear infinite;
+}
+
+.watermark-icon.wave {
+    animation: wave 3s ease-in-out infinite;
+}
+
+/* Leaf Watermark */
+.leaf-watermark {
+    position: absolute;
+    color: var(--forest-green);
+    opacity: 0.07;
+    pointer-events: none;
+}
+
+.leaf-watermark.top-left {
+    top: -20px;
+    left: -40px;
+    font-size: 20rem;
+    animation: float 10s ease-in-out infinite;
+}
+
+.leaf-watermark.top-right {
+    top: 50px;
+    right: -60px;
+    font-size: 18rem;
+    animation: float 12s ease-in-out infinite 1s;
+}
+
+.leaf-watermark.bottom-left {
+    bottom: -40px;
+    left: 10%;
+    font-size: 16rem;
+    animation: float 14s ease-in-out infinite 2s;
+}
+
+.leaf-watermark.bottom-right {
+    bottom: 10%;
+    right: 5%;
+    font-size: 14rem;
+    animation: float 11s ease-in-out infinite 1.5s;
+}
+
+.leaf-watermark.center {
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    font-size: 12rem;
+    animation: rotateSlow 30s linear infinite;
+}
+
+/* Water Droplet Watermark */
+.droplet-watermark {
+    position: absolute;
+    color: var(--water-blue);
+    opacity: 0.06;
+    pointer-events: none;
+}
+
+.droplet-watermark.scatter {
+    font-size: 10rem;
+    animation: float 10s ease-in-out infinite;
+}
+
+/* Fish Watermark */
+.fish-watermark {
+    position: absolute;
+    color: var(--light-green);
+    opacity: 0.07;
+    pointer-events: none;
+    font-size: 14rem;
+    animation: swim 15s ease-in-out infinite;
+}
+
+/* Plant/Grass Watermark */
+.plant-watermark {
+    position: absolute;
+    color: var(--forest-green);
+    opacity: 0.06;
+    pointer-events: none;
+    font-size: 12rem;
+    animation: sway 8s ease-in-out infinite;
+}
+
+/* Eco Circle Pattern Watermark */
+.eco-circle-watermark {
+    position: absolute;
+    width: 200px;
+    height: 200px;
+    border: 3px solid var(--forest-green);
+    border-radius: 50%;
+    opacity: 0.05;
+    pointer-events: none;
+    animation: rotateSlow 30s linear infinite;
+}
+
+.eco-circle-watermark::before {
+    content: '';
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    width: 120px;
+    height: 120px;
+    border: 2px solid var(--light-green);
+    border-radius: 50%;
+}
+
+.eco-circle-watermark::after {
+    content: '';
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    width: 60px;
+    height: 60px;
+    border: 2px solid var(--water-blue);
+    border-radius: 50%;
+}
+
+/* Hero Section Watermarks */
+.hero {
+    position: relative;
+}
+
+.hero .leaf-watermark {
+    position: fixed;
+}
+
+/* Info Section Watermarks */
+.info-section {
+    position: relative;
+    overflow: hidden;
+}
+
+.info-section .watermark {
+    position: absolute;
+}
+
+/* Ecosystem Section Watermarks */
+.ecosystem-section {
+    position: relative;
+    overflow: hidden;
+}
+
+.ecosystem-section .watermark {
+    position: absolute;
+}
+
+/* Report Section Watermarks */
+.report-section {
+    position: relative;
+    overflow: hidden;
+}
+
+.report-section .watermark {
+    position: absolute;
+}
+
+/* Map Section Watermarks */
+.map-section {
+    position: relative;
+    overflow: hidden;
+}
+
+.map-section .watermark {
+    position: absolute;
+    z-index: 0;
+}
+
+/* Dashboard Section Watermarks */
+.dashboard {
+    position: relative;
+    overflow: hidden;
+}
+
+.dashboard .watermark {
+    position: absolute;
+}
+
+/* Footer Watermarks */
+.footer {
+    position: relative;
+    overflow: hidden;
+}
+
+.footer .watermark {
+    position: absolute;
+    opacity: 0.2;
+}
+
+/* Floating Leaves Animation Container */
+.floating-leaves {
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    pointer-events: none;
+    z-index: 1;
+    overflow: hidden;
+}
+
+.floating-leaf {
+    position: absolute;
+    font-size: 3rem;
+    opacity: 0.08;
+    animation: float 8s ease-in-out infinite;
+    color: var(--forest-green);
+}
+
+.floating-leaf:nth-child(1) {
+    left: 5%;
+    top: 10%;
+    animation-delay: 0s;
+    font-size: 2.5rem;
+}
+
+.floating-leaf:nth-child(2) {
+    left: 15%;
+    top: 40%;
+    animation-delay: 2s;
+    font-size: 3.5rem;
+}
+
+.floating-leaf:nth-child(3) {
+    left: 80%;
+    top: 20%;
+    animation-delay: 1s;
+    font-size: 2.8rem;
+}
+
+.floating-leaf:nth-child(4) {
+    left: 85%;
+    top: 60%;
+    animation-delay: 3s;
+    font-size: 3.2rem;
+}
+
+.floating-leaf:nth-child(5) {
+    left: 50%;
+    top: 80%;
+    animation-delay: 1.5s;
+    font-size: 2.2rem;
+}
+
+.floating-leaf:nth-child(6) {
+    left: 25%;
+    top: 70%;
+    animation-delay: 2.5s;
+    font-size: 3rem;
+}
+
+/* SVG-based Watermark */
+.svg-watermark {
+    position: absolute;
+    opacity: 0.07;
+    pointer-events: none;
+}
+
+.svg-watermark svg {
+    width: 100%;
+    height: 100%;
+    filter: drop-shadow(0 0 10px rgba(74, 124, 59, 0.1));
+}
+
+/* Responsive Watermarks */
+@media (max-width: 1024px) {
+    .watermark.hero-watermark {
+        font-size: 12rem;
+        top: 15%;
+        right: 2%;
+    }
+
+    .leaf-watermark.top-left {
+        font-size: 15rem;
+    }
+
+    .leaf-watermark.top-right {
+        font-size: 13rem;
+    }
+
+    .leaf-watermark.bottom-left {
+        font-size: 12rem;
+    }
+
+    .leaf-watermark.bottom-right {
+        font-size: 10rem;
+    }
+
+    .eco-circle-watermark {
+        width: 150px;
+        height: 150px;
+    }
+
+    .eco-circle-watermark::before {
+        width: 90px;
+        height: 90px;
+    }
+
+    .eco-circle-watermark::after {
+        width: 45px;
+        height: 45px;
+    }
+}
+
+@media (max-width: 768px) {
+    .watermark.hero-watermark {
+        font-size: 8rem;
+        opacity: 0.05;
+    }
+
+    .watermark.section-watermark {
+        font-size: 8rem;
+        opacity: 0.04;
+    }
+
+    .leaf-watermark.top-left {
+        font-size: 10rem;
+    }
+
+    .leaf-watermark.top-right {
+        font-size: 8rem;
+        opacity: 0.05;
+    }
+
+    .leaf-watermark.bottom-left {
+        font-size: 8rem;
+        opacity: 0.04;
+    }
+
+    .leaf-watermark.bottom-right {
+        font-size: 6rem;
+        opacity: 0.04;
+    }
+
+    .floating-leaf {
+        font-size: 2rem;
+        opacity: 0.06;
+    }
+
+    .floating-leaf:nth-child(1) {
+        font-size: 1.8rem;
+    }
+
+    .floating-leaf:nth-child(2) {
+        font-size: 2.2rem;
+    }
+
+    .floating-leaf:nth-child(3) {
+        font-size: 2rem;
+    }
+
+    .floating-leaf:nth-child(4) {
+        font-size: 2.1rem;
+    }
+
+    .floating-leaf:nth-child(5) {
+        font-size: 1.7rem;
+    }
+
+    .floating-leaf:nth-child(6) {
+        font-size: 1.9rem;
+    }
+
+    .eco-circle-watermark {
+        width: 100px;
+        height: 100px;
+        border-width: 2px;
+    }
+
+    .eco-circle-watermark::before {
+        width: 60px;
+        height: 60px;
+        border-width: 1.5px;
+    }
+
+    .eco-circle-watermark::after {
+        width: 30px;
+        height: 30px;
+        border-width: 1.5px;
+    }
+}
+
+@media (max-width: 480px) {
+    .watermark.hero-watermark {
+        font-size: 5rem;
+        opacity: 0.04;
+    }
+
+    .watermark.section-watermark {
+        font-size: 5rem;
+        opacity: 0.03;
+    }
+
+    .leaf-watermark {
+        opacity: 0.03;
+    }
+
+    .leaf-watermark.top-left {
+        font-size: 6rem;
+    }
+
+    .leaf-watermark.top-right {
+        font-size: 5rem;
+    }
+
+    .leaf-watermark.bottom-left {
+        font-size: 5rem;
+    }
+
+    .leaf-watermark.bottom-right {
+        font-size: 4rem;
+    }
+
+    .floating-leaf {
+        font-size: 1.5rem;
+        opacity: 0.04;
+    }
+
+    .floating-leaf:nth-child(1) {
+        font-size: 1.3rem;
+    }
+
+    .floating-leaf:nth-child(2) {
+        font-size: 1.6rem;
+    }
+
+    .floating-leaf:nth-child(3) {
+        font-size: 1.4rem;
+    }
+
+    .floating-leaf:nth-child(4) {
+        font-size: 1.5rem;
+    }
+
+    .floating-leaf:nth-child(5) {
+        font-size: 1.2rem;
+    }
+
+    .floating-leaf:nth-child(6) {
+        font-size: 1.4rem;
+    }
+
+    .eco-circle-watermark {
+        width: 60px;
+        height: 60px;
+        border-width: 1px;
+    }
+
+    .eco-circle-watermark::before {
+        width: 35px;
+        height: 35px;
+        border-width: 1px;
+    }
+
+    .eco-circle-watermark::after {
+        width: 15px;
+        height: 15px;
+        border-width: 1px;
+    }
+}
+
+/* Watermark Opacity Variations */
+.watermark.faded {
+    opacity: 0.03;
+}
+
+.watermark.subtle {
+    opacity: 0.05;
+}
+
+.watermark.visible {
+    opacity: 0.12;
+}
+
+/* Watermark Color Variations */
+.watermark.green {
+    color: var(--forest-green);
+}
+
+.watermark.blue {
+    color: var(--water-blue);
+}
+
+.watermark.light-green {
+    color: var(--light-green);
+}
