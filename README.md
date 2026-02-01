@@ -92,5 +92,5 @@ Visit `http://localhost:8000` in your browser.
 - **Experience Driven**: Designed by backend developers to handle industrial-grade data isolation.
 
 ## 🤝 Contact
-Developed with ❤️ by **heyyyshiva**  
+Developed with ❤️ by **team econova**  
 *Building technology for a sustainable future.*
